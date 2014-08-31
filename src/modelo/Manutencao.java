@@ -20,4 +20,20 @@ public class Manutencao {
 
 	}
 
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public Carro getCarro() {
+		return carro;
+	}
+
+	public void setCarro(Carro carro) {
+		this.carro = carro;
+	}
+
 }

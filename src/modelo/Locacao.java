@@ -24,4 +24,27 @@ public class Locacao {
 
 	}
 
+	public String getAgenteDeLocacao() {
+		return agenteDeLocacao;
+	}
+
+	public void setAgenteDeLocacao(String agenteDeLocacao) {
+		this.agenteDeLocacao = agenteDeLocacao;
+	}
+
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
+
+	public Carro getCarro() {
+		return carro;
+	}
+
+	public void setCarro(Carro carro) {
+		this.carro = carro;
+	}
 }

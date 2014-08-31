@@ -2,7 +2,6 @@ package modelo;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Collection;
 
 public class Cliente {
 
@@ -18,11 +17,11 @@ public class Cliente {
 
 	private int idade;
 
-	private List carrosAlugados;
+	private List<Carro> carrosAlugados;
 
 	private boolean listaNegra;
 
-	private Collection<Reserva> reserva;
+	private List<Reserva> reserva;
 
 	private Carro carro;
 
@@ -34,4 +33,83 @@ public class Cliente {
 
 	}
 
+	public String getNumeroCNH() {
+		return numeroCNH;
+	}
+
+	public void setNumeroCNH(String numeroCNH) {
+		this.numeroCNH = numeroCNH;
+	}
+
+	public String getApoliceSeguro() {
+		return apoliceSeguro;
+	}
+
+	public void setApoliceSeguro(String apoliceSeguro) {
+		this.apoliceSeguro = apoliceSeguro;
+	}
+
+	public Date getDataLicenca() {
+		return dataLicenca;
+	}
+
+	public void setDataLicenca(Date dataLicenca) {
+		this.dataLicenca = dataLicenca;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public boolean isPossuiContrato() {
+		return possuiContrato;
+	}
+
+	public void setPossuiContrato(boolean possuiContrato) {
+		this.possuiContrato = possuiContrato;
+	}
+
+	public int getIdade() {
+		return idade;
+	}
+
+	public void setIdade(int idade) {
+		this.idade = idade;
+	}
+
+	public List<Carro> getCarrosAlugados() {
+		return carrosAlugados;
+	}
+
+	public void setCarrosAlugados(List<Carro> carrosAlugados) {
+		this.carrosAlugados = carrosAlugados;
+	}
+
+	public boolean isListaNegra() {
+		return listaNegra;
+	}
+
+	public void setListaNegra(boolean listaNegra) {
+		this.listaNegra = listaNegra;
+	}
+
+	public List<Reserva> getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(List<Reserva> reserva) {
+		this.reserva = reserva;
+	}
+
+	public Carro getCarro() {
+		return carro;
+	}
+
+	public void setCarro(Carro carro) {
+		this.carro = carro;
+	}
 }

@@ -1,7 +1,7 @@
 package modelo;
 
 import java.util.Date;
-import java.util.Collection;
+import java.util.List;
 
 public class Carro {
 
@@ -25,8 +25,103 @@ public class Carro {
 
 	private Manutencao manutencao;
 
-	private Collection<Locacao> locacao;
+	private List<Locacao> locacao;
 
 	private Cliente cliente;
 
+	public String getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public String getFabricante() {
+		return fabricante;
+	}
+
+	public void setFabricante(String fabricante) {
+		this.fabricante = fabricante;
+	}
+
+	public boolean isDisponibilidade() {
+		return disponibilidade;
+	}
+
+	public void setDisponibilidade(boolean disponibilidade) {
+		this.disponibilidade = disponibilidade;
+	}
+
+	public boolean isNecessitaDeConserto() {
+		return necessitaDeConserto;
+	}
+
+	public void setNecessitaDeConserto(boolean necessitaDeConserto) {
+		this.necessitaDeConserto = necessitaDeConserto;
+	}
+
+	public double getQuilometragem() {
+		return quilometragem;
+	}
+
+	public void setQuilometragem(double quilometragem) {
+		this.quilometragem = quilometragem;
+	}
+
+	public Date getUltimaRevisao() {
+		return ultimaRevisao;
+	}
+
+	public void setUltimaRevisao(Date ultimaRevisao) {
+		this.ultimaRevisao = ultimaRevisao;
+	}
+
+	public boolean isManutencaoNoDia() {
+		return manutencaoNoDia;
+	}
+
+	public void setManutencaoNoDia(boolean manutencaoNoDia) {
+		this.manutencaoNoDia = manutencaoNoDia;
+	}
+
+	public String getFilial() {
+		return filial;
+	}
+
+	public void setFilial(String filial) {
+		this.filial = filial;
+	}
+
+	public Manutencao getManutencao() {
+		return manutencao;
+	}
+
+	public void setManutencao(Manutencao manutencao) {
+		this.manutencao = manutencao;
+	}
+
+	public List<Locacao> getLocacao() {
+		return locacao;
+	}
+
+	public void setLocacao(List<Locacao> locacao) {
+		this.locacao = locacao;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 }
