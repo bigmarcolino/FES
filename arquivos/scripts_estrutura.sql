@@ -1,4 +1,14 @@
 /*
+ Observacoes: grupo do carro, grupo A,B,C
+ (de mais barato pra mais carro)
+ 
+ forma_de_pagamento: credito, debito, a vista
+ 
+ criar tabela com chave estrangeira pra proxima semana
+ 
+ */
+
+/*
 create table cliente (
 	id serial,
 	nome text,
