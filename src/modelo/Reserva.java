@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class Reserva {
 
+	private int id;
+	
 	private String modelo;
 
 	private String grupo;
@@ -70,6 +72,14 @@ public class Reserva {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

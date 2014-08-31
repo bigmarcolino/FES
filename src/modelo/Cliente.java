@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Cliente {
 
+	private int id;
+	
 	private String numeroCNH;
 
 	private String apoliceSeguro;
@@ -111,5 +113,13 @@ public class Cliente {
 
 	public void setCarro(Carro carro) {
 		this.carro = carro;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

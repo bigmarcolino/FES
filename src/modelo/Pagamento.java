@@ -2,6 +2,8 @@ package modelo;
 
 public class Pagamento {
 
+	private int id;
+	
 	private double tarifaDeRetorno;
 
 	private double tarifaDeDanificacao;
@@ -44,6 +46,14 @@ public class Pagamento {
 
 	public void setFormaDePagamento(String formaDePagamento) {
 		this.formaDePagamento = formaDePagamento;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

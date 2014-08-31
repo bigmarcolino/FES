@@ -2,6 +2,8 @@ package modelo;
 
 public class Locacao {
 
+	private int id;
+	
 	private String agenteDeLocacao;
 
 	private Reserva reserva;
@@ -46,5 +48,13 @@ public class Locacao {
 
 	public void setCarro(Carro carro) {
 		this.carro = carro;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Carro {
 
+	private int id;
+	
 	private String grupo;
 
 	private String modelo;
@@ -123,5 +125,13 @@ public class Carro {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

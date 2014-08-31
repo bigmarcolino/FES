@@ -3,7 +3,8 @@ package modelo;
 import java.util.Date;
 
 public class Manutencao {
-
+	private int id;
+	
 	private Date data;
 
 	private Carro carro;
@@ -35,5 +36,12 @@ public class Manutencao {
 	public void setCarro(Carro carro) {
 		this.carro = carro;
 	}
+	
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
 }
