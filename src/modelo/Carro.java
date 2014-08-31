@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.Date;
+import java.util.Collection;
 
 public class Carro {
 
@@ -24,6 +25,8 @@ public class Carro {
 
 	private Manutencao manutencao;
 
-	private Locacao locacao;
+	private Collection<Locacao> locacao;
+
+	private Cliente cliente;
 
 }

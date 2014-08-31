@@ -6,8 +6,6 @@ public class Manutencao {
 
 	private Date data;
 
-	//private String nomeCarro;
-
 	private Carro carro;
 
 	public void solicitar() {

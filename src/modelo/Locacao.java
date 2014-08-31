@@ -4,7 +4,7 @@ public class Locacao {
 
 	private String agenteDeLocacao;
 
-	private Reservas reservas;
+	private Reserva reserva;
 
 	private Carro carro;
 
