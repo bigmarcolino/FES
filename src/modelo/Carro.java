@@ -13,7 +13,7 @@ public class Carro {
 
 	private String fabricante;
 
-	private boolean disponibilidade;
+	private boolean disponivel;
 
 	private boolean necessitaDeConserto;
 
@@ -55,12 +55,12 @@ public class Carro {
 		this.fabricante = fabricante;
 	}
 
-	public boolean isDisponibilidade() {
-		return disponibilidade;
+	public boolean isDisponivel() {
+		return disponivel;
 	}
 
-	public void setDisponibilidade(boolean disponibilidade) {
-		this.disponibilidade = disponibilidade;
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
 	}
 
 	public boolean isNecessitaDeConserto() {
