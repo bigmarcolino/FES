@@ -6,7 +6,7 @@ import java.util.List;
 public class Carro {
 
 	private int id;
-	
+
 	private String grupo;
 
 	private String modelo;
@@ -30,27 +30,27 @@ public class Carro {
 	private List<Locacao> locacao;
 
 	private Cliente cliente;
-	
-	//----------------------
-	
+
+	// ----------------------
+
 	private String ativo;
-	
+
 	private String descricao;
-	
-	public void iniciarPropriedades(){
+
+	public void iniciarPropriedades() {
 		if (necessitaDeConserto || !disponivel)
-			ativo = "disabled=\"disabled\""; 
+			ativo = "disabled=\"disabled\"";
 		else
 			ativo = "";
-		
+
 		descricao = "";
-		if (necessitaDeConserto){
+		if (necessitaDeConserto) {
 			descricao += "Precisa de conserto!";
 		}
-		else if (!disponivel){
+		else if (!disponivel) {
 			descricao += "Carro indisponível!";
 		}
-		
+
 	}
 
 	public String getGrupo() {
@@ -148,7 +148,7 @@ public class Carro {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public int getId() {
 		return id;
 	}

@@ -14,7 +14,7 @@
 	    	Selecione o carro:
 		    <select name="sel_carro">
 		    	<c:forEach items="${carros}" var="carro">
-			    	<option value="${carro}" ${carro.ativo} title="${carro.descricao}">${carro.fabricante} ${carro.modelo}</option>
+			    	<option value="${carro.id}" ${carro.ativo} title="${carro.descricao}">${carro.fabricante} ${carro.modelo}</option>
 			    </c:forEach>
 			</select>
 			<br/>
