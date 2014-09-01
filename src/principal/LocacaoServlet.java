@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import modelo.Carro;
+import modelo.Cliente;
 
 @WebServlet("/locacao")
 public class LocacaoServlet extends HttpServlet {
@@ -27,7 +28,8 @@ public class LocacaoServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Carro> carros = new ArrayList<Carro>();
-
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		
 		Connection conexao = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -65,7 +67,25 @@ public class LocacaoServlet extends HttpServlet {
 				carro.setManutencaoNoDia(resultado.getBoolean("manutencao_no_dia"));
 				carro.setFilial(resultado.getString("filial"));
 
+				carro.iniciarPropriedades();
 				carros.add(carro);
+			}
+			resultado.close();
+			
+			resultado = comando.executeQuery("select * from cliente");
+			while (resultado.next()) {
+				Cliente cliente = new Cliente();
+				
+				cliente.setId(resultado.getInt("id"));
+				cliente.setNumeroCNH(resultado.getString("numerocnh"));
+				cliente.setApoliceSeguro(resultado.getString("apolice_seguro"));
+				cliente.setNome(resultado.getString("nome"));
+				cliente.setDataLicenca(resultado.getDate("data_licenca"));
+				cliente.setPossuiContrato(resultado.getBoolean("possui_contrato"));
+				cliente.setIdade(resultado.getInt("idade"));
+				cliente.setListaNegra(resultado.getBoolean("lista_negra"));
+				cliente.iniciarPropriedades();
+				clientes.add(cliente);
 			}
 		}
 		catch (SQLException e) {
@@ -87,6 +107,7 @@ public class LocacaoServlet extends HttpServlet {
 
 		}
 
+		request.setAttribute("clientes", clientes);
 		request.setAttribute("carros", carros);
 		request.getRequestDispatcher("/locacao.jsp").forward(request, response);
 	}

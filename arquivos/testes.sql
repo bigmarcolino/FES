@@ -1,1 +1,1 @@
-select * from carro;
+select * from cliente;

@@ -1,5 +1,8 @@
 package modelo;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +37,33 @@ public class Cliente {
 	public void cadastrar() {
 
 	}
-
+	private String ativo;
+	
+	private String descricao;
+	
+	public void iniciarPropriedades(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dataLicenca);
+		int dia = cal.get(Calendar.DAY_OF_MONTH);
+		int mes = cal.get(Calendar.MONTH) + 1;
+		int ano = cal.get(Calendar.YEAR);
+		long anos = ChronoUnit.YEARS.between(LocalDate.of(ano, mes, dia), LocalDate.now());
+		
+		if (anos < 1 || listaNegra)
+			ativo = "disabled=\"disabled\""; 
+		else
+			ativo = "";
+		
+		descricao = "";
+		if (anos < 1){
+			descricao += "A licensa atual tem duração menor que 1 ano!";
+		}
+		else if (listaNegra){
+			descricao += "Esse cliente está na lista negra!";
+		}
+		
+	}
+	
 	public String getNumeroCNH() {
 		return numeroCNH;
 	}
@@ -121,5 +150,21 @@ public class Cliente {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 }

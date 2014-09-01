@@ -30,6 +30,28 @@ public class Carro {
 	private List<Locacao> locacao;
 
 	private Cliente cliente;
+	
+	//----------------------
+	
+	private String ativo;
+	
+	private String descricao;
+	
+	public void iniciarPropriedades(){
+		if (necessitaDeConserto || !disponivel)
+			ativo = "disabled=\"disabled\""; 
+		else
+			ativo = "";
+		
+		descricao = "";
+		if (necessitaDeConserto){
+			descricao += "Precisa de conserto!";
+		}
+		else if (!disponivel){
+			descricao += "Carro indisponível!";
+		}
+		
+	}
 
 	public String getGrupo() {
 		return grupo;
@@ -133,5 +155,21 @@ public class Carro {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 }
