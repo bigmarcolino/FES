@@ -4,9 +4,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Teste</title>
+        <title>Página de Locação</title>
     </head>
     <body>
-		Valor: ${pagamento.id}
+    	<form action="">    	
+	    	Selecione o carro:
+		    <select name="sel_carro">
+		    	<c:forEach items="${carros}" var="carro">
+			    	<option value="${carro.id}">${carro.fabricante} ${carro.modelo}</option>
+			    </c:forEach>
+			</select>
+			<br/>
+			<input type="submit" value="Alocar" />
+		</form>
     </body>
 </html>
