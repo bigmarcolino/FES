@@ -37,6 +37,10 @@ public class Carro {
 
 	private String descricao;
 
+	public String toString(){
+		return fabricante + " " + modelo;
+	}
+	
 	public void iniciarPropriedades() {
 		if (necessitaDeConserto || !disponivel)
 			ativo = "disabled=\"disabled\"";

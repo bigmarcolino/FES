@@ -41,6 +41,10 @@ public class Cliente {
 	
 	private String descricao;
 	
+	public String toString(){
+		return nome;
+	}
+	
 	public void iniciarPropriedades(){
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dataLicenca);
