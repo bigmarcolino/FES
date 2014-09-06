@@ -37,7 +37,7 @@ public class Cliente {
 	public void cadastrar() {
 
 	}
-	private String ativo;
+	private boolean ativo;
 	
 	private String descricao;
 	
@@ -54,9 +54,9 @@ public class Cliente {
 		long anos = ChronoUnit.YEARS.between(LocalDate.of(ano, mes, dia), LocalDate.now());
 		
 		if (anos < 1 || listaNegra)
-			ativo = "disabled=\"disabled\""; 
+			ativo = false; 
 		else
-			ativo = "";
+			ativo = true;
 		
 		descricao = "";
 		if (anos < 1){
@@ -156,11 +156,11 @@ public class Cliente {
 		this.id = id;
 	}
 	
-	public String getAtivo() {
+	public boolean getAtivo() {
 		return ativo;
 	}
 
-	public void setAtivo(String ativo) {
+	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
 

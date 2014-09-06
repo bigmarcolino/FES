@@ -33,7 +33,7 @@ public class Carro {
 
 	// ----------------------
 
-	private String ativo;
+	private boolean ativo;
 
 	private String descricao;
 
@@ -43,9 +43,9 @@ public class Carro {
 	
 	public void iniciarPropriedades() {
 		if (necessitaDeConserto || !disponivel)
-			ativo = "disabled=\"disabled\"";
+			ativo = true;
 		else
-			ativo = "";
+			ativo = false;
 
 		descricao = "";
 		if (necessitaDeConserto) {
@@ -161,11 +161,11 @@ public class Carro {
 		this.id = id;
 	}
 
-	public String getAtivo() {
+	public boolean getAtivo() {
 		return ativo;
 	}
 
-	public void setAtivo(String ativo) {
+	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
 
