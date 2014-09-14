@@ -26,8 +26,8 @@ import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import modelo.Carro;
-import modelo.Cliente;
+import controller.model.Carro;
+import controller.model.Cliente;
 
 @SuppressWarnings("deprecation")
 public class TelaLocacao extends Application{
@@ -121,7 +121,7 @@ public class TelaLocacao extends Application{
 	public void start(Stage stage) throws Exception {
 		carregaClientesCarros();
 		
-		stage.setTitle("VocÃª-Aluga");
+		stage.setTitle("Você-Aluga");
 		
 		Scene cena = new Scene(new Group(), 700, 250);
 		
@@ -138,7 +138,7 @@ public class TelaLocacao extends Application{
 		lNome = new Label("Nome:");
 		nome = new TextField();
 		lCarro = new Label("Selecione o carro:");
-		lInicio = new Label("Data de inÃ­cio:");
+		lInicio = new Label("Data de início:");
 		lFim = new Label("Data de fim:");
 		lCliente = new Label("Selecione o cliente:");
 		

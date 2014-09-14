@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane layoutX="-292.0" layoutY="-142.0" prefHeight="408.0" prefWidth="508.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Pagamento" />
+          <Tab text="Locação">
+               <content>
+                  <Accordion>
+                    <panes>
+                      <TitledPane animated="false" text="Cadastrar cliente" />
+                      <TitledPane animated="false" text="Reservar antecipado" />
+                        <TitledPane animated="false" text="Alocar imediato">
+                           <content>
+                              <AnchorPane>
+                                 <children>
+                                    <Label layoutX="38.0" layoutY="29.0" text="Nome do cliente" />
+                                    <TextField layoutX="237.0" layoutY="25.0" prefWidth="174.0" />
+                                    <ComboBox layoutX="237.0" layoutY="73.0" prefWidth="174.0" />
+                                    <Label layoutX="37.0" layoutY="77.0" text="Grupo do automóvel" />
+                                    <Label layoutX="38.0" layoutY="169.0" text="Data de início" />
+                                    <Label layoutX="38.0" layoutY="210.0" text="Data de fim" />
+                                    <DatePicker layoutX="237.0" layoutY="165.0" />
+                                    <DatePicker layoutX="237.0" layoutY="206.0" />
+                                    <Separator layoutX="483.0" layoutY="19.0" orientation="VERTICAL" prefHeight="200.0" />
+                                    <Label layoutX="37.0" layoutY="124.0" text="Automóvel" />
+                                    <ComboBox layoutX="237.0" layoutY="120.0" prefWidth="174.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                    </panes>
+                  </Accordion>
+               </content></Tab>
+            <Tab text="Manutenção">
+               <content>
+                  <Accordion>
+                    <panes>
+                      <TitledPane animated="false" text="Agendar manutenção" />
+                      <TitledPane animated="false" text="Vender" />
+                    </panes>
+                  </Accordion>
+               </content></Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
