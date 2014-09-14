@@ -1,4 +1,4 @@
-package principal;
+package controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -121,7 +121,7 @@ public class TelaLocacao extends Application{
 	public void start(Stage stage) throws Exception {
 		carregaClientesCarros();
 		
-		stage.setTitle("Você-Aluga");
+		stage.setTitle("Vocï¿½-Aluga");
 		
 		Scene cena = new Scene(new Group(), 700, 250);
 		
@@ -138,7 +138,7 @@ public class TelaLocacao extends Application{
 		lNome = new Label("Nome:");
 		nome = new TextField();
 		lCarro = new Label("Selecione o carro:");
-		lInicio = new Label("Data de início:");
+		lInicio = new Label("Data de inï¿½cio:");
 		lFim = new Label("Data de fim:");
 		lCliente = new Label("Selecione o cliente:");
 		

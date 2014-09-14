@@ -6,43 +6,45 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
+
 public class Cliente {
 
-	private int id;
+	private IntegerProperty id;
 	
-	private String numeroCNH;
+	private StringProperty numeroCNH;
 
-	private String apoliceSeguro;
+	private StringProperty apoliceSeguro;
 
-	private Date dataLicenca;
+	private ObjectProperty<LocalDate> dataLicenca;
 
-	private String nome;
+	private StringProperty nome;
 
-	private boolean possuiContrato;
+	private BooleanProperty possuiContrato;
 
-	private int idade;
+	private IntegerProperty idade;
 
 	private List<Carro> carrosAlugados;
 
-	private boolean listaNegra;
+	private BooleanProperty listaNegra;
 
 	private List<Reserva> reserva;
 
 	private Carro carro;
-
-	public void fazerReserva() {
-
-	}
-
-	public void cadastrar() {
-
-	}
-	private boolean ativo;
 	
-	private String descricao;
+	private BooleanProperty ativo;
+	
+	private StringProperty descricao;
+	
+	public void fazerReserva() {}
+
+	public void cadastrar() {}
 	
 	public String toString(){
-		return nome;
+		return nome.get();
 	}
 	
 	public void iniciarPropriedades(){

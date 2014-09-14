@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.view.MainAppController">
    <children>
       <TabPane layoutX="-292.0" layoutY="-142.0" prefHeight="408.0" prefWidth="508.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -21,7 +21,7 @@
                               <AnchorPane>
                                  <children>
                                     <Label layoutX="38.0" layoutY="29.0" text="Nome do cliente" />
-                                    <TextField layoutX="237.0" layoutY="25.0" prefWidth="174.0" />
+                                    <TextField fx:id="nomeCliente_AlocarImediato" layoutX="237.0" layoutY="25.0" prefWidth="174.0" />
                                     <ComboBox layoutX="237.0" layoutY="73.0" prefWidth="174.0" />
                                     <Label layoutX="37.0" layoutY="77.0" text="Grupo do automóvel" />
                                     <Label layoutX="38.0" layoutY="169.0" text="Data de início" />
