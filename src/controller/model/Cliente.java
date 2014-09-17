@@ -1,6 +1,7 @@
 package controller.model;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,74 +50,104 @@ public class Cliente {
 	
 	public void iniciarPropriedades(){
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(dataLicenca);
+		cal.setTime(Date.from(dataLicenca.get().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		int dia = cal.get(Calendar.DAY_OF_MONTH);
 		int mes = cal.get(Calendar.MONTH) + 1;
 		int ano = cal.get(Calendar.YEAR);
 		long anos = ChronoUnit.YEARS.between(LocalDate.of(ano, mes, dia), LocalDate.now());
 		
-		if (anos < 1 || listaNegra)
-			ativo = false; 
+		if (anos < 1 || listaNegra.get())
+			ativo.set(false); 
 		else
-			ativo = true;
+			ativo.set(true);
 		
-		descricao = "";
+		descricao.set("");
 		if (anos < 1){
-			descricao += "A licensa atual tem duração menor que 1 ano!";
+			descricao.set("A licensa atual tem duração menor que 1 ano!");
 		}
-		else if (listaNegra){
-			descricao += "Esse cliente está na lista negra!";
+		else if (listaNegra.get()){
+			descricao.set("Esse cliente está na lista negra!");
 		}
 		
 	}
 	
 	public String getNumeroCNH() {
-		return numeroCNH;
+		return numeroCNH.get();
 	}
 
 	public void setNumeroCNH(String numeroCNH) {
-		this.numeroCNH = numeroCNH;
+		this.numeroCNH.set(numeroCNH);
 	}
+	
+	public StringProperty numeroCNHProperty() {
+        return numeroCNH;
+    }
+	
 
 	public String getApoliceSeguro() {
-		return apoliceSeguro;
+		return apoliceSeguro.get();
 	}
 
 	public void setApoliceSeguro(String apoliceSeguro) {
-		this.apoliceSeguro = apoliceSeguro;
+		this.apoliceSeguro.set(apoliceSeguro);
+	}
+	
+	public StringProperty apoliceSeguroProperty() {
+        return apoliceSeguro;
+    }
+	
+
+	public LocalDate getDataLicenca() {
+		return dataLicenca.get();
 	}
 
-	public Date getDataLicenca() {
-		return dataLicenca;
+	public void setDataLicenca(LocalDate dataLicenca) {
+		this.dataLicenca.set(dataLicenca);
 	}
-
-	public void setDataLicenca(Date dataLicenca) {
-		this.dataLicenca = dataLicenca;
-	}
+	
+	public ObjectProperty<LocalDate> dataLicencaProperty() {
+        return dataLicenca;
+    }
+	
 
 	public String getNome() {
-		return nome;
+		return nome.get();
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome.set(nome);
 	}
+	
+	public StringProperty nomeProperty() {
+        return nome;
+    }
+	
 
 	public boolean isPossuiContrato() {
-		return possuiContrato;
+		return possuiContrato.get();
 	}
 
 	public void setPossuiContrato(boolean possuiContrato) {
-		this.possuiContrato = possuiContrato;
+		this.possuiContrato.set(possuiContrato);
 	}
 
+	public BooleanProperty possuiContratoProperty() {
+        return possuiContrato;
+    }
+	
+	
 	public int getIdade() {
-		return idade;
+		return idade.get();
 	}
 
 	public void setIdade(int idade) {
-		this.idade = idade;
+		this.idade.set(idade);
 	}
+	
+	public IntegerProperty idadeProperty() {
+        return idade;
+    }
+	
 
 	public List<Carro> getCarrosAlugados() {
 		return carrosAlugados;
@@ -126,13 +157,15 @@ public class Cliente {
 		this.carrosAlugados = carrosAlugados;
 	}
 
+	
 	public boolean isListaNegra() {
-		return listaNegra;
+		return listaNegra.get();
 	}
 
 	public void setListaNegra(boolean listaNegra) {
-		this.listaNegra = listaNegra;
+		this.listaNegra.set(listaNegra);
 	}
+	
 
 	public List<Reserva> getReserva() {
 		return reserva;
@@ -141,6 +174,7 @@ public class Cliente {
 	public void setReserva(List<Reserva> reserva) {
 		this.reserva = reserva;
 	}
+	
 
 	public Carro getCarro() {
 		return carro;
@@ -150,27 +184,42 @@ public class Cliente {
 		this.carro = carro;
 	}
 	
+	
 	public int getId() {
-		return id;
+		return id.get();
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.id.set(id);
 	}
 	
+	public IntegerProperty idProperty() {
+        return id;
+    }
+	
+	
 	public boolean getAtivo() {
-		return ativo;
+		return ativo.get();
 	}
 
 	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+		this.ativo.set(ativo);
 	}
+	
+	public BooleanProperty ativoProperty() {
+        return ativo;
+    }
+	
 
 	public String getDescricao() {
-		return descricao;
+		return descricao.get();
 	}
 
 	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+		this.descricao.set(descricao);
 	}
+	
+	public StringProperty descricaoProperty() {
+        return descricao;
+    }
 }

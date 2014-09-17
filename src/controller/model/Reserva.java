@@ -1,18 +1,22 @@
 package controller.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 
 public class Reserva {
 
-	private int id;
+	private IntegerProperty id;
 	
-	private String modelo;
+	private StringProperty modelo;
 
-	private String grupo;
+	private StringProperty grupo;
 
-	private Date dataFim;
+	private ObjectProperty<LocalDate> dataFim;
 
-	private Date dataInicio;
+	private ObjectProperty<LocalDate> dataInicio;
 
 	private Locacao locacao;
 
@@ -27,36 +31,56 @@ public class Reserva {
 	}
 
 	public String getModelo() {
-		return modelo;
+		return modelo.get();
 	}
 
 	public void setModelo(String modelo) {
-		this.modelo = modelo;
+		this.modelo.set(modelo);
 	}
+	
+	public StringProperty modeloProperty() {
+        return modelo;
+    }
+	
 
 	public String getGrupo() {
-		return grupo;
+		return grupo.get();
 	}
 
 	public void setGrupo(String grupo) {
-		this.grupo = grupo;
+		this.grupo.set(grupo);
+	}
+	
+	public StringProperty grupoProperty() {
+        return grupo;
+    }
+	
+
+	public LocalDate getDataFim() {
+		return dataFim.get();
 	}
 
-	public Date getDataFim() {
-		return dataFim;
+	public void setDataFim(LocalDate dataFim) {
+		this.dataFim.set(dataFim);
+	}
+	
+	public ObjectProperty<LocalDate> dataFimProperty() {
+        return dataFim;
+    }
+	
+
+	public LocalDate getDataInicio() {
+		return dataInicio.get();
 	}
 
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
+	public void setDataInicio(LocalDate dataInicio) {
+		this.dataInicio.set(dataInicio);
 	}
-
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
+	
+	public ObjectProperty<LocalDate> dataInicioProperty() {
+        return dataInicio;
+    }
+	
 
 	public Locacao getLocacao() {
 		return locacao;
@@ -65,6 +89,7 @@ public class Reserva {
 	public void setLocacao(Locacao locacao) {
 		this.locacao = locacao;
 	}
+	
 
 	public Cliente getCliente() {
 		return cliente;
@@ -73,13 +98,17 @@ public class Reserva {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
 
 	public int getId() {
-		return id;
+		return id.get();
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.id.set(id);
 	}
-
+	
+	public IntegerProperty idProperty() {
+        return id;
+    }
 }

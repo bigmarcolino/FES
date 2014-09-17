@@ -1,11 +1,14 @@
 package controller.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 
 public class Manutencao {
-	private int id;
+	private IntegerProperty id;
 	
-	private Date data;
+	private ObjectProperty<LocalDate> data;
 
 	private Carro carro;
 
@@ -21,13 +24,18 @@ public class Manutencao {
 
 	}
 
-	public Date getData() {
-		return data;
+	public LocalDate getData() {
+		return data.get();
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setData(LocalDate data) {
+		this.data.set(data);
 	}
+	
+	public ObjectProperty<LocalDate> dataProperty() {
+        return data;
+    }
+	
 
 	public Carro getCarro() {
 		return carro;
@@ -37,11 +45,16 @@ public class Manutencao {
 		this.carro = carro;
 	}
 	
+	
 	public int getId() {
-		return id;
+		return id.get();
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.id.set(id);
 	}
+	
+	public IntegerProperty idProperty() {
+        return id;
+    }
 }

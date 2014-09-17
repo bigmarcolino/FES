@@ -99,7 +99,7 @@ public class Carro {
     }
 	
 
-	public boolean getDisponivel() {
+	public boolean isDisponivel() {
 		return disponivel.get();
 	}
 
@@ -112,7 +112,7 @@ public class Carro {
     }
 	
 
-	public boolean getNecessitaDeConserto() {
+	public boolean isNecessitaDeConserto() {
 		return necessitaDeConserto.get();
 	}
 
@@ -151,7 +151,7 @@ public class Carro {
     }
 	
 	
-	public boolean getManutencaoNoDia() {
+	public boolean isManutencaoNoDia() {
 		return manutencaoNoDia.get();
 	}
 
@@ -217,7 +217,7 @@ public class Carro {
     }
 	
 
-	public boolean getAtivo() {
+	public boolean isAtivo() {
 		return ativo.get();
 	}
 

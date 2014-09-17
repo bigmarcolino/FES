@@ -1,59 +1,86 @@
 package controller.model;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+
 public class Pagamento {
 
-	private int id;
+	private IntegerProperty id;
 	
-	private double tarifaDeRetorno;
+	private DoubleProperty tarifaDeRetorno;
 
-	private double tarifaDeDanificacao;
+	private DoubleProperty tarifaDeDanificacao;
 
-	private double tarifaDeAtraso;
+	private DoubleProperty tarifaDeAtraso;
 
-	private String formaDePagamento;
+	private StringProperty formaDePagamento;
 
 	public void registrarPagamento() {
 
 	}
 
 	public double getTarifaDeRetorno() {
-		return tarifaDeRetorno;
+		return tarifaDeRetorno.get();
 	}
 
 	public void setTarifaDeRetorno(double tarifaDeRetorno) {
-		this.tarifaDeRetorno = tarifaDeRetorno;
+		this.tarifaDeRetorno.set(tarifaDeRetorno);
 	}
+	
+	public DoubleProperty tarifaDeRetornoProperty() {
+        return tarifaDeRetorno;
+    }
+	
 
 	public double getTarifaDeDanificacao() {
-		return tarifaDeDanificacao;
+		return tarifaDeDanificacao.get();
 	}
 
 	public void setTarifaDeDanificacao(double tarifaDeDanificacao) {
-		this.tarifaDeDanificacao = tarifaDeDanificacao;
+		this.tarifaDeDanificacao.set(tarifaDeDanificacao);
 	}
+	
+	public DoubleProperty tarifaDeDanificacaoProperty() {
+        return tarifaDeRetorno;
+    }
+	
 
 	public double getTarifaDeAtraso() {
-		return tarifaDeAtraso;
+		return tarifaDeAtraso.get();
 	}
 
 	public void setTarifaDeAtraso(double tarifaDeAtraso) {
-		this.tarifaDeAtraso = tarifaDeAtraso;
+		this.tarifaDeAtraso.set(tarifaDeAtraso);
 	}
+	
+	public DoubleProperty tarifaDeAtrasoProperty() {
+        return tarifaDeRetorno;
+    }
+	
 
 	public String getFormaDePagamento() {
-		return formaDePagamento;
+		return formaDePagamento.get();
 	}
 
 	public void setFormaDePagamento(String formaDePagamento) {
-		this.formaDePagamento = formaDePagamento;
+		this.formaDePagamento.set(formaDePagamento);
 	}
 	
+	public StringProperty formaDePagamentoProperty() {
+        return formaDePagamento;
+    }
+	
+	
 	public int getId() {
-		return id;
+		return id.get();
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.id.set(id);
 	}
-
+	
+	public IntegerProperty idProperty() {
+        return id;
+    }
 }

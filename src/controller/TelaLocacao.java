@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,7 +74,7 @@ public class TelaLocacao extends Application{
 				carro.setDisponivel(resultado.getBoolean("disponivel"));
 				carro.setNecessitaDeConserto(resultado.getBoolean("necessita_de_conserto"));
 				carro.setQuilometragem(resultado.getDouble("quilometragem"));
-				carro.setUltimaRevisao(resultado.getDate("ultima_revisao"));
+				carro.setUltimaRevisao(resultado.getDate("ultima_revisao").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 				carro.setManutencaoNoDia(resultado.getBoolean("manutencao_no_dia"));
 				carro.setFilial(resultado.getString("filial"));
 
