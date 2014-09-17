@@ -1,7 +1,10 @@
 package controller.model;
 
+import java.time.LocalDate;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 
 public class Pagamento {
@@ -15,6 +18,8 @@ public class Pagamento {
 	private DoubleProperty tarifaDeAtraso;
 
 	private StringProperty formaDePagamento;
+	
+	private ObjectProperty<LocalDate> data;
 
 	public void registrarPagamento() {
 
@@ -69,6 +74,19 @@ public class Pagamento {
 	
 	public StringProperty formaDePagamentoProperty() {
         return formaDePagamento;
+    }
+	
+	
+	public LocalDate getData() {
+		return data.get();
+	}
+
+	public void setData(LocalDate data) {
+		this.data.set(data);
+	}
+	
+	public ObjectProperty<LocalDate> dataProperty() {
+        return data;
     }
 	
 	

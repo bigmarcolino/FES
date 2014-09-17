@@ -14,10 +14,12 @@ public class Carro {
 	private IntegerProperty id;
 	
 	private StringProperty grupo;
+	
+	private StringProperty fabricante;
 
 	private StringProperty modelo;
 
-	private StringProperty fabricante;
+	private StringProperty ano;
 
 	private BooleanProperty disponivel;
 
@@ -70,6 +72,18 @@ public class Carro {
 
 	public StringProperty grupoProperty() {
         return grupo;
+    }
+	
+	public String getAno() {
+		return ano.get();
+	}
+
+	public void setAno(String ano) {
+		this.ano.set(ano);
+	}
+	
+	public StringProperty anoProperty() {
+        return ano;
     }
 	
 	

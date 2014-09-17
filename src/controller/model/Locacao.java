@@ -1,6 +1,9 @@
 package controller.model;
 
+import java.time.LocalDate;
+
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 
 public class Locacao {
@@ -12,6 +15,8 @@ public class Locacao {
 	private Reserva reserva;
 
 	private Carro carro;
+	
+	private ObjectProperty<LocalDate> data;
 
 	public void verificarCarrosCadastrados() {
 
@@ -39,6 +44,19 @@ public class Locacao {
 	
 	public StringProperty agenteDeLocacaoProperty() {
         return agenteDeLocacao;
+    }
+	
+	
+	public LocalDate getData() {
+		return data.get();
+	}
+
+	public void setData(LocalDate data) {
+		this.data.set(data);
+	}
+	
+	public ObjectProperty<LocalDate> dataProperty() {
+        return data;
     }
 	
 
