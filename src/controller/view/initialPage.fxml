@@ -27,7 +27,7 @@
                                     <Label layoutX="23.0" layoutY="74.0" text="Grupo do carro" />
                                     <Label layoutX="24.0" layoutY="162.0" text="Data de início" />
                                     <Label layoutX="24.0" layoutY="205.0" text="Data de fim" />
-                                    <DatePicker fx:id="dataInicio_AlocarImediato" layoutX="133.0" layoutY="158.0" />
+                                    <DatePicker fx:id="dataInicio_AlocarImediato" disable="true" layoutX="133.0" layoutY="158.0" opacity="0.94" />
                                     <DatePicker fx:id="dataFim_AlocarImediato" layoutX="133.0" layoutY="201.0" />
                                     <Separator layoutX="409.0" layoutY="25.0" orientation="VERTICAL" prefHeight="207.0" />
                                     <Label layoutX="23.0" layoutY="118.0" text="Carro" />

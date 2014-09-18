@@ -1,5 +1,7 @@
 package controller.view;
 
+import java.time.LocalDate;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,7 +13,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import org.controlsfx.control.action.Action;
 import org.controlsfx.control.textfield.TextFields;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 
 import controller.MainApp;
 
@@ -91,23 +96,44 @@ public class MainAppController {
             carro_AlocarImediato.setItems(dadosComboBoxCarros_AlocarImediato);
         });
     	
+    	LocalDate localDate = LocalDate.now();
+    	dataInicio_AlocarImediato.setValue(localDate);
+    	
     	efetuarAlocacao_AlocarImediato.setOnAction((event) -> {
-    	    System.out.println("Pressionei o botão");
+    		Action response = Dialogs.create()
+    		        .owner(null)
+    		        .title("Aviso!")
+    		        .message("Deseja enviar os dados?")
+    		        .actions(Dialog.Actions.OK, Dialog.Actions.CANCEL)
+    		        .showConfirm();
+
+    		if (response == Dialog.Actions.OK) {
+    			System.out.println("Enviei os dados");
+    		}
     	});
     	
     	limpar_AlocarImediato.setOnAction((event) -> {
-    		nomeCliente_AlocarImediato.setText("");
-    		grupoCarro_AlocarImediato.getItems().clear();
-    		carro_AlocarImediato.getItems().clear();
-    		dataInicio_AlocarImediato.setValue(null);
-    		dataFim_AlocarImediato.setValue(null);
-    		ok_AlocarImediato.setText("");
+    		
+    		Action response = Dialogs.create()
+    		        .owner(null)
+    		        .title("Aviso!")
+    		        .message("Deseja limpar os campos?")
+    		        .actions(Dialog.Actions.OK, Dialog.Actions.CANCEL)
+    		        .showConfirm();
+
+    		if (response == Dialog.Actions.OK) {
+    			nomeCliente_AlocarImediato.setText("");
+        		grupoCarro_AlocarImediato.getSelectionModel().clearSelection();
+        		carro_AlocarImediato.getSelectionModel().clearSelection();
+        		dataFim_AlocarImediato.setValue(null);
+        		ok_AlocarImediato.setText("");
+    		}
     	});
     	
     	//---------------------------------------------------------------------------------------------------------------------------------------
     }
     
     public void setMainApp(MainApp mainApp) {
-        this.mainApp = mainApp;   
+        this.mainApp = mainApp;
     }
 }
