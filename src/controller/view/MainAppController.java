@@ -23,9 +23,6 @@ import controller.MainApp;
 public class MainAppController {
 	
 	// Acordeon Alocar Imediato ------------------------------------------------------------------------------------------------------
-
-	private ObservableList<String> dadosComboBoxGrupos_AlocarImediato = FXCollections.observableArrayList();
-	private ObservableList<String> dadosComboBoxCarros_AlocarImediato = FXCollections.observableArrayList();
 	
 	@FXML
     private TextField nomeCliente_AlocarImediato;
@@ -63,8 +60,10 @@ public class MainAppController {
     	
     	//Lógica e inicialização de campos da Alocação Imediata ------------------------------------------------------------------------------
     	
+    	//autocomplete
     	TextFields.bindAutoCompletion(nomeCliente_AlocarImediato, "Hey", "Hello", "Hello World", "Apple", "Cool", "Costa", "Cola", "Coca Cola");
 
+    	//evento outfocus no nome do cliente
     	nomeCliente_AlocarImediato.focusedProperty().addListener(new ChangeListener<Boolean>()
     	{
 		    @Override
@@ -77,14 +76,17 @@ public class MainAppController {
 		    }
     	});
     	
+    	//seta grupos existentes
+    	ObservableList<String> dadosComboBoxGrupos_AlocarImediato = FXCollections.observableArrayList();
     	dadosComboBoxGrupos_AlocarImediato.add("A");
     	dadosComboBoxGrupos_AlocarImediato.add("B");
     	dadosComboBoxGrupos_AlocarImediato.add("C");
     	dadosComboBoxGrupos_AlocarImediato.add("D");
     	dadosComboBoxGrupos_AlocarImediato.add("E");
-    	
     	grupoCarro_AlocarImediato.setItems(dadosComboBoxGrupos_AlocarImediato);
     	
+    	//prepara para setar carros existentes
+    	ObservableList<String> dadosComboBoxCarros_AlocarImediato = FXCollections.observableArrayList();
     	dadosComboBoxCarros_AlocarImediato.add("Fiat Uno");
     	dadosComboBoxCarros_AlocarImediato.add("Volkswagen Gol");
     	dadosComboBoxCarros_AlocarImediato.add("Chevrolet Camaro");
@@ -92,13 +94,16 @@ public class MainAppController {
     	dadosComboBoxCarros_AlocarImediato.add("Ford Focus");
     	dadosComboBoxCarros_AlocarImediato.add("Audi R8");
     	
+    	//seta carros existentes quando um grupo é selecionado
     	grupoCarro_AlocarImediato.setOnAction((event) -> {            
             carro_AlocarImediato.setItems(dadosComboBoxCarros_AlocarImediato);
         });
     	
+    	//preenche a data inicial com a data atual
     	LocalDate localDate = LocalDate.now();
     	dataInicio_AlocarImediato.setValue(localDate);
     	
+    	//gera o modal do efetuar locação
     	efetuarAlocacao_AlocarImediato.setOnAction((event) -> {
     		Action response = Dialogs.create()
     		        .owner(null)
@@ -112,6 +117,7 @@ public class MainAppController {
     		}
     	});
     	
+    	//gera o modal do limpar dados
     	limpar_AlocarImediato.setOnAction((event) -> {
     		
     		Action response = Dialogs.create()
