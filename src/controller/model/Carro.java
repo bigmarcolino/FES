@@ -61,6 +61,10 @@ public class Carro {
 		}
 
 	}
+	
+	public String getNome() {
+		return getFabricante() + " " + getModelo();
+	}
 
 	public String getGrupo() {
 		return grupo.get();

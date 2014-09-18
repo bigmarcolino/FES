@@ -37,7 +37,8 @@
                                           <Font size="28.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="efetuarAlocacao_AlocarImediato" layoutX="148.0" layoutY="275.0" mnemonicParsing="false" text="Efetuar alocação" />
+                                    <Button fx:id="efetuarAlocacao_AlocarImediato" layoutX="97.0" layoutY="275.0" mnemonicParsing="false" text="Efetuar alocação" />
+                                    <Button fx:id="limpar_AlocarImediato" layoutX="257.0" layoutY="275.0" mnemonicParsing="false" text="Limpar" />
                                  </children>
                               </AnchorPane>
                            </content>

@@ -43,6 +43,9 @@ public class MainAppController {
 	@FXML
     private Button efetuarAlocacao_AlocarImediato;
 	
+	@FXML
+    private Button limpar_AlocarImediato;
+	
 	// ---------------------------------------------------------------------------------------------------------------------------------
 	
 	private MainApp mainApp;
@@ -56,18 +59,18 @@ public class MainAppController {
     	//Lógica e inicialização de campos da Alocação Imediata ------------------------------------------------------------------------------
     	
     	TextFields.bindAutoCompletion(nomeCliente_AlocarImediato, "Hey", "Hello", "Hello World", "Apple", "Cool", "Costa", "Cola", "Coca Cola");
-    	
+
     	nomeCliente_AlocarImediato.focusedProperty().addListener(new ChangeListener<Boolean>()
-		{
+    	{
 		    @Override
 		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
 		    {
-		        if (!newPropertyValue)
+		        if (!newPropertyValue && !nomeCliente_AlocarImediato.getText().equals(""))
 		        {
-		            ok_AlocarImediato.setText("OK");
+		        	ok_AlocarImediato.setText("OK");
 		        }
 		    }
-		});
+    	});
     	
     	dadosComboBoxGrupos_AlocarImediato.add("A");
     	dadosComboBoxGrupos_AlocarImediato.add("B");
@@ -90,6 +93,15 @@ public class MainAppController {
     	
     	efetuarAlocacao_AlocarImediato.setOnAction((event) -> {
     	    System.out.println("Pressionei o botão");
+    	});
+    	
+    	limpar_AlocarImediato.setOnAction((event) -> {
+    		nomeCliente_AlocarImediato.setText("");
+    		grupoCarro_AlocarImediato.getItems().clear();
+    		carro_AlocarImediato.getItems().clear();
+    		dataInicio_AlocarImediato.setValue(null);
+    		dataFim_AlocarImediato.setValue(null);
+    		ok_AlocarImediato.setText("");
     	});
     	
     	//---------------------------------------------------------------------------------------------------------------------------------------
