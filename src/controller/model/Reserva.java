@@ -4,15 +4,10 @@ import java.time.LocalDate;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
 
 public class Reserva {
 
 	private IntegerProperty id;
-	
-	private StringProperty modelo;
-
-	private StringProperty grupo;
 
 	private ObjectProperty<LocalDate> dataFim;
 
@@ -21,6 +16,10 @@ public class Reserva {
 	private Locacao locacao;
 
 	private Cliente cliente;
+	
+	private Carro carro;
+
+	private Pagamento pagamento;
 
 	public void criar() {
 
@@ -28,33 +27,7 @@ public class Reserva {
 
 	public void cancelar() {
 
-	}
-
-	public String getModelo() {
-		return modelo.get();
-	}
-
-	public void setModelo(String modelo) {
-		this.modelo.set(modelo);
-	}
-	
-	public StringProperty modeloProperty() {
-        return modelo;
-    }
-	
-
-	public String getGrupo() {
-		return grupo.get();
-	}
-
-	public void setGrupo(String grupo) {
-		this.grupo.set(grupo);
-	}
-	
-	public StringProperty grupoProperty() {
-        return grupo;
-    }
-	
+	}		
 
 	public LocalDate getDataFim() {
 		return dataFim.get();
@@ -97,6 +70,24 @@ public class Reserva {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	
+	public Carro getCarro() {
+		return carro;
+	}
+
+	public void setCarro(Carro carro) {
+		this.carro = carro;
+	}
+	
+
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
 	}
 	
 

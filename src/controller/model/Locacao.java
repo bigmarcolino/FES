@@ -2,6 +2,7 @@ package controller.model;
 
 import java.time.LocalDate;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -16,13 +17,21 @@ public class Locacao {
 
 	private Carro carro;
 	
+	private Cliente cliente;
+	
+	private BooleanProperty ativo;
+	
 	private ObjectProperty<LocalDate> data;
 
+	private Pagamento pagamento;
+
+	private Motorista motorista;
+	
 	public void verificarCarrosCadastrados() {
 
 	}
 
-	public void verificarCarrosDisponíveis() {
+	public void verificarCarrosDisponiveis() {
 
 	}
 
@@ -68,6 +77,33 @@ public class Locacao {
 		this.reserva = reserva;
 	}
 	
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
+	
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
+	
+	
+	public Motorista getMotorista() {
+		return motorista;
+	}
+
+	public void setMotorista(Motorista motorista) {
+		this.motorista = motorista;
+	}
+	
 
 	public Carro getCarro() {
 		return carro;
@@ -76,6 +112,19 @@ public class Locacao {
 	public void setCarro(Carro carro) {
 		this.carro = carro;
 	}
+	
+	
+	public Boolean getAtivo() {
+		return ativo.get();
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo.set(ativo);
+	}
+	
+	public BooleanProperty AtivoProperty() {
+        return ativo;
+    }
 	
 	
 	public int getId() {

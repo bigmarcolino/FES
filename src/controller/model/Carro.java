@@ -1,7 +1,7 @@
 package controller.model;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Collection;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -33,37 +33,16 @@ public class Carro {
 
 	private StringProperty filial;
 
-	private Manutencao manutencao;
-
-	private List<Locacao> locacao;
+	private Collection<Locacao> locacao;
 
 	private Cliente cliente;
 
-	private BooleanProperty ativo;
+	private Reserva reserva;
 
-	private StringProperty descricao;
-
-	public String toString(){
-		return fabricante + " " + modelo;
-	}
-	
-	public void iniciarPropriedades() {
-		if (necessitaDeConserto.get() || !(disponivel.get()))
-			ativo.set(true);
-		else
-			ativo.set(false);
-
-		if (necessitaDeConserto.get()) {
-			descricao.set("Precisa de conserto!");
-		}
-		else if (!(disponivel.get())) {
-			descricao.set("Carro indisponível!");
-		}
-
-	}
+	private Collection<Manutencao> manutencao;
 	
 	public String getNome() {
-		return getFabricante() + " " + getModelo();
+		return fabricante + " " + modelo;
 	}
 
 	public String getGrupo() {
@@ -193,23 +172,23 @@ public class Carro {
 	public StringProperty filialProperty() {
         return filial;
     }
-	
-
-	public Manutencao getManutencao() {
-		return manutencao;
-	}
-
-	public void setManutencao(Manutencao manutencao) {
-		this.manutencao = manutencao;
-	}
 
 	
-	public List<Locacao> getLocacao() {
+	public Collection<Locacao> getLocacao() {
 		return locacao;
 	}
 
-	public void setLocacao(List<Locacao> locacao) {
+	public void setLocacao(Collection<Locacao> locacao) {
 		this.locacao = locacao;
+	}
+	
+	
+	public Collection<Manutencao> getManutencao() {
+		return manutencao;
+	}
+
+	public void setManutencao(Collection<Manutencao> manutencao) {
+		this.manutencao = manutencao;
 	}
 	
 
@@ -219,6 +198,15 @@ public class Carro {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
 	}
 
 	
@@ -232,31 +220,5 @@ public class Carro {
 	
 	public IntegerProperty idProperty() {
         return id;
-    }
-	
-
-	public boolean isAtivo() {
-		return ativo.get();
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo.set(ativo);
-	}
-	
-	public BooleanProperty ativoProperty() {
-        return ativo;
-    }
-
-	
-	public String getDescricao() {
-		return descricao.get();
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao.set(descricao);
-	}
-	
-	public StringProperty descricaoProperty() {
-        return descricao;
     }
 }

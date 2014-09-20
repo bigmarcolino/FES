@@ -20,6 +20,12 @@ public class Pagamento {
 	private StringProperty formaDePagamento;
 	
 	private ObjectProperty<LocalDate> data;
+	
+	private Cliente cliente;
+
+	private Reserva reserva;
+
+	private Locacao locacao;
 
 	public void registrarPagamento() {
 
@@ -88,6 +94,33 @@ public class Pagamento {
 	public ObjectProperty<LocalDate> dataProperty() {
         return data;
     }
+	
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
+	
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
+	
+	
+	public Locacao getLocacao() {
+		return locacao;
+	}
+
+	public void setLocacao(Locacao locacao) {
+		this.locacao = locacao;
+	}
 	
 	
 	public int getId() {
