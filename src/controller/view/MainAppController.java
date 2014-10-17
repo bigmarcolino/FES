@@ -109,10 +109,9 @@ public class MainAppController {
     		        .owner(null)
     		        .title("Aviso!")
     		        .message("Deseja enviar os dados?")
-    		        .actions(Dialog.Actions.OK, Dialog.Actions.CANCEL)
     		        .showConfirm();
 
-    		if (response == Dialog.Actions.OK) {
+    		if (response == Dialog.ACTION_YES) {
     			System.out.println("Enviei os dados");
     		}
     	});
@@ -121,13 +120,12 @@ public class MainAppController {
     	limpar_AlocarImediato.setOnAction((event) -> {
     		
     		Action response = Dialogs.create()
-    		        .owner(null)
-    		        .title("Aviso!")
-    		        .message("Deseja limpar os campos?")
-    		        .actions(Dialog.Actions.OK, Dialog.Actions.CANCEL)
-    		        .showConfirm();
+    			      .owner(null)
+    			      .title("Aviso!")
+    			      .message( "Deseja limpar os campos?")
+    			      .showConfirm();
 
-    		if (response == Dialog.Actions.OK) {
+    		if (response == Dialog.ACTION_YES) {
     			nomeCliente_AlocarImediato.setText("");
         		grupoCarro_AlocarImediato.getSelectionModel().clearSelection();
         		carro_AlocarImediato.getSelectionModel().clearSelection();
