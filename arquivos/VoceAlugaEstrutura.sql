@@ -8,10 +8,7 @@ CREATE TABLE carro (
  quilometragem DOUBLE PRECISION,
  ultima_revisao DATE,
  filial text,
- ano VARCHAR(4),
- id_locacao BIGINT UNSIGNED,
- id_reserva BIGINT UNSIGNED,
- id_manutencao BIGINT UNSIGNED
+ ano VARCHAR(4)
 );
 
 ALTER TABLE carro ADD CONSTRAINT PK_carro PRIMARY KEY (id_carro);
@@ -22,8 +19,6 @@ CREATE TABLE cliente (
  nome text,
  idade text,
  lista_negra boolean,
- id_locacao BIGINT UNSIGNED,
- id_reserva BIGINT UNSIGNED,
  id_motorista BIGINT UNSIGNED
 );
 
@@ -94,13 +89,6 @@ CREATE TABLE reserva (
 ALTER TABLE reserva ADD CONSTRAINT PK_reserva PRIMARY KEY (id_reserva);
 
 
-ALTER TABLE carro ADD CONSTRAINT FK_carro_0 FOREIGN KEY (id_locacao) REFERENCES locacao (id_locacao);
-ALTER TABLE carro ADD CONSTRAINT FK_carro_1 FOREIGN KEY (id_reserva) REFERENCES reserva (id_reserva);
-ALTER TABLE carro ADD CONSTRAINT FK_carro_3 FOREIGN KEY (id_manutencao) REFERENCES manutencao (id_manutencao);
-
-
-ALTER TABLE cliente ADD CONSTRAINT FK_cliente_0 FOREIGN KEY (id_locacao) REFERENCES locacao (id_locacao);
-ALTER TABLE cliente ADD CONSTRAINT FK_cliente_1 FOREIGN KEY (id_reserva) REFERENCES reserva (id_reserva);
 ALTER TABLE cliente ADD CONSTRAINT FK_cliente_3 FOREIGN KEY (id_motorista) REFERENCES motorista (id_motorista);
 
 
