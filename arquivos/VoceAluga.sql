@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: sql2.freemysqlhosting.net:3306
--- Generation Time: Oct 22, 2014 at 12:48 AM
+-- Generation Time: Oct 22, 2014 at 01:15 AM
 -- Server version: 5.5.38-0ubuntu0.12.04.1
 -- PHP Version: 5.3.28
 
@@ -113,6 +113,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `nome` text,
   `idade` text,
   `lista_negra` tinyint(1) DEFAULT NULL,
+  `id_motorista` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_cliente`),
   UNIQUE KEY `id_cliente` (`id_cliente`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
@@ -121,12 +122,12 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 -- Dumping data for table `cliente`
 --
 
-INSERT INTO `cliente` (`id_cliente`, `nome`, `idade`, `lista_negra`) VALUES
-(1, 'Roberto Freitas', '25', 0),
-(2, 'José de Faria', '18', 0),
-(3, 'Maria Rocha', '34', 1),
-(4, 'Bruno de Almeida', '19', 1),
-(5, 'Elias Monteiro', '38', 0);
+INSERT INTO `cliente` (`id_cliente`, `nome`, `idade`, `lista_negra`, `id_motorista`) VALUES
+(1, 'Roberto Freitas', '25', 0, NULL),
+(2, 'José de Faria', '18', 0, NULL),
+(3, 'Maria Rocha', '34', 1, NULL),
+(4, 'Bruno de Almeida', '19', 1, NULL),
+(5, 'Elias Monteiro', '38', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -166,6 +167,8 @@ CREATE TABLE IF NOT EXISTS `locacao` (
   `ativo` tinyint(1) DEFAULT NULL,
   `id_reserva` bigint(20) unsigned DEFAULT NULL,
   `id_cliente` bigint(20) unsigned DEFAULT NULL,
+  `id_carro` varchar(255) DEFAULT NULL,
+  `id_pagamento` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_locacao`),
   UNIQUE KEY `id_locacao` (`id_locacao`),
   KEY `FK_locacao_1` (`id_reserva`),
@@ -176,9 +179,9 @@ CREATE TABLE IF NOT EXISTS `locacao` (
 -- Dumping data for table `locacao`
 --
 
-INSERT INTO `locacao` (`id_locacao`, `agente_de_locacao`, `data`, `ativo`, `id_reserva`, `id_cliente`) VALUES
-(1, 'Patrick Marques', '2014-02-20', 0, NULL, 3),
-(2, 'Patrick Marques', '2014-06-14', 0, NULL, 4);
+INSERT INTO `locacao` (`id_locacao`, `agente_de_locacao`, `data`, `ativo`, `id_reserva`, `id_cliente`, `id_carro`, `id_pagamento`) VALUES
+(1, 'Patrick Marques', '2014-02-20', 0, NULL, 3, NULL, NULL),
+(2, 'Patrick Marques', '2014-06-14', 0, NULL, 4, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -220,18 +223,19 @@ CREATE TABLE IF NOT EXISTS `motorista` (
   `data_licenca` date DEFAULT NULL,
   `possui_contrato` tinyint(1) DEFAULT NULL,
   `nome` text,
+  `id_cliente` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_motorista`),
   UNIQUE KEY `id_motorista` (`id_motorista`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `motorista`
 --
 
-INSERT INTO `motorista` (`id_motorista`, `cnh`, `idade`, `apolice_seguros`, `data_licenca`, `possui_contrato`, `nome`) VALUES
-(1, '1012316574', '50', '012142', '2000-05-10', 1, 'Alberto Jr. Batista'),
-(2, '3548961000', '47', '752340', '2010-11-21', 0, 'Júlio Ferreira Santos'),
-(3, '3211457941', '50', '698532', '2014-01-29', 1, 'Gabriel Moraes');
+INSERT INTO `motorista` (`id_motorista`, `cnh`, `idade`, `apolice_seguros`, `data_licenca`, `possui_contrato`, `nome`, `id_cliente`) VALUES
+(1, '1012316574', '50', '012142', '2000-05-10', 1, 'Alberto Jr. Batista', NULL),
+(2, '3548961000', '47', '752340', '2010-11-21', 0, 'Júlio Ferreira Santos', NULL),
+(3, '3211457941', '50', '698532', '2014-01-29', 1, 'Gabriel Moraes', NULL);
 
 -- --------------------------------------------------------
 
@@ -273,6 +277,9 @@ CREATE TABLE IF NOT EXISTS `reserva` (
   `data_fim` date DEFAULT NULL,
   `data_inicio` date DEFAULT NULL,
   `id_cliente` bigint(20) unsigned DEFAULT NULL,
+  `id_carro` varchar(255) DEFAULT NULL,
+  `id_locacao` varchar(255) DEFAULT NULL,
+  `id_pagamento` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_reserva`),
   UNIQUE KEY `id_reserva` (`id_reserva`),
   KEY `FK_reserva_1` (`id_cliente`)
@@ -282,11 +289,11 @@ CREATE TABLE IF NOT EXISTS `reserva` (
 -- Dumping data for table `reserva`
 --
 
-INSERT INTO `reserva` (`id_reserva`, `data_fim`, `data_inicio`, `id_cliente`) VALUES
-(1, '2015-01-20', '2015-01-01', 1),
-(2, '2015-01-30', '2015-01-20', 2),
-(3, '0000-00-00', '2015-02-20', 5),
-(4, '2015-04-13', '2015-04-11', 2);
+INSERT INTO `reserva` (`id_reserva`, `data_fim`, `data_inicio`, `id_cliente`, `id_carro`, `id_locacao`, `id_pagamento`) VALUES
+(1, '2015-01-20', '2015-01-01', 1, NULL, NULL, NULL),
+(2, '2015-01-30', '2015-01-20', 2, NULL, NULL, NULL),
+(3, '2015-02-28', '2015-02-20', 5, NULL, NULL, NULL),
+(4, '2015-04-13', '2015-04-11', 2, NULL, NULL, NULL);
 
 --
 -- Constraints for dumped tables
@@ -296,22 +303,22 @@ INSERT INTO `reserva` (`id_reserva`, `data_fim`, `data_inicio`, `id_cliente`) VA
 -- Constraints for table `carro_tem_locacao`
 --
 ALTER TABLE `carro_tem_locacao`
-  ADD CONSTRAINT `FK_carro_tem_locacao_1` FOREIGN KEY (`id_locacao`) REFERENCES `locacao` (`id_locacao`),
-  ADD CONSTRAINT `FK_carro_tem_locacao_0` FOREIGN KEY (`id_carro`) REFERENCES `carro` (`id_carro`);
+  ADD CONSTRAINT `FK_carro_tem_locacao_0` FOREIGN KEY (`id_carro`) REFERENCES `carro` (`id_carro`),
+  ADD CONSTRAINT `FK_carro_tem_locacao_1` FOREIGN KEY (`id_locacao`) REFERENCES `locacao` (`id_locacao`);
 
 --
 -- Constraints for table `carro_tem_reserva`
 --
 ALTER TABLE `carro_tem_reserva`
-  ADD CONSTRAINT `FK_carro_tem_reserva_1` FOREIGN KEY (`id_reserva`) REFERENCES `reserva` (`id_reserva`),
-  ADD CONSTRAINT `FK_carro_tem_reserva_0` FOREIGN KEY (`id_carro`) REFERENCES `carro` (`id_carro`);
+  ADD CONSTRAINT `FK_carro_tem_reserva_0` FOREIGN KEY (`id_carro`) REFERENCES `carro` (`id_carro`),
+  ADD CONSTRAINT `FK_carro_tem_reserva_1` FOREIGN KEY (`id_reserva`) REFERENCES `reserva` (`id_reserva`);
 
 --
 -- Constraints for table `cliente_tem_motorista`
 --
 ALTER TABLE `cliente_tem_motorista`
-  ADD CONSTRAINT `FK_cliente_tem_motorista_1` FOREIGN KEY (`id_motorista`) REFERENCES `motorista` (`id_motorista`),
-  ADD CONSTRAINT `FK_cliente_tem_motorista_0` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`);
+  ADD CONSTRAINT `FK_cliente_tem_motorista_0` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`),
+  ADD CONSTRAINT `FK_cliente_tem_motorista_1` FOREIGN KEY (`id_motorista`) REFERENCES `motorista` (`id_motorista`);
 
 --
 -- Constraints for table `locacao`
