@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="VoceAluga">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>model.Carro</class>
+		<class>model.CarroTemLocacao</class>
+		<class>model.CarroTemReserva</class>
+		<class>model.Cliente</class>
+		<class>model.ClienteTemMotorista</class>
+		<class>model.Locacao</class>
+		<class>model.Manutencao</class>
+		<class>model.Motorista</class>
+		<class>model.Pagamento</class>
+		<class>model.Reserva</class>
+		<properties>
+			<!-- dados da conexao -->
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://sql2.freemysqlhosting.net:3306/sql250894" />
+			<property name="javax.persistence.jdbc.user" value="sql250894" />
+			<property name="javax.persistence.jdbc.password" value="gU3*wG3!" />
+
+			<!-- propriedades do hibernate -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+		</properties>
+	</persistence-unit>
+</persistence>
