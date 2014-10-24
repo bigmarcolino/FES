@@ -24,4 +24,28 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 		</properties>
 	</persistence-unit>
+	<persistence-unit name="VoceAlugaLocal">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>model.Carro</class>
+		<class>model.CarroTemLocacao</class>
+		<class>model.CarroTemReserva</class>
+		<class>model.Cliente</class>
+		<class>model.ClienteTemMotorista</class>
+		<class>model.Locacao</class>
+		<class>model.Manutencao</class>
+		<class>model.Motorista</class>
+		<class>model.Pagamento</class>
+		<class>model.Reserva</class>
+		<properties>
+			<!-- dados da conexao -->
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/vocealuga" />
+			<property name="javax.persistence.jdbc.user" value="mvinicius" />
+			<property name="javax.persistence.jdbc.password" value="mvinicius" />
+
+			<!-- propriedades do hibernate -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+		</properties>
+	</persistence-unit>
 </persistence>

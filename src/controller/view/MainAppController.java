@@ -1,6 +1,7 @@
 package controller.view;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,12 +13,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
+import model.Cliente;
 
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 
+import controller.Controlador;
 import controller.MainApp;
 
 public class MainAppController {
@@ -60,8 +64,11 @@ public class MainAppController {
     	
     	//Lógica e inicialização de campos da Alocação Imediata ------------------------------------------------------------------------------
     	
+    	List<Cliente> clientes = Controlador.listaClientes();
+    	for (Cliente cliente : clientes)
+    		System.out.println(cliente.getNome() + "->" + (cliente.getListaNegra() ? "Sim" : "Não"));
     	//autocomplete
-    	TextFields.bindAutoCompletion(nomeCliente_AlocarImediato, "Hey", "Hello", "Hello World", "Apple", "Cool", "Costa", "Cola", "Coca Cola");
+    	TextFields.bindAutoCompletion(nomeCliente_AlocarImediato, clientes);
 
     	//evento outfocus no nome do cliente
     	nomeCliente_AlocarImediato.focusedProperty().addListener(new ChangeListener<Boolean>()
@@ -71,7 +78,7 @@ public class MainAppController {
 		    {
 		        if (!newPropertyValue && !nomeCliente_AlocarImediato.getText().equals(""))
 		        {
-		        	ok_AlocarImediato.setText("OK");
+		        	
 		        }
 		    }
     	});
