@@ -199,6 +199,10 @@ public class Carro implements Serializable {
 
 		return manutencao;
 	}
+	
+	public String getNome(){
+		return getFabricante() + " " + getModelo();
+	}
 
 	public Manutencao removeManutencao(Manutencao manutencao) {
 		getManutencaos().remove(manutencao);
@@ -206,5 +210,4 @@ public class Carro implements Serializable {
 
 		return manutencao;
 	}
-
 }

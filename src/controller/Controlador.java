@@ -29,7 +29,6 @@ public class Controlador {
 		em.getTransaction().begin();
 		em.persist(o);
 		em.getTransaction().commit();
-
 	}
 
 	public static void alterar(Object o) {
@@ -44,16 +43,38 @@ public class Controlador {
 		em.getTransaction().commit();
 	}
 
-	public static List<Motorista> listaMotoristas() {
-		Query query = em.createQuery("FROM Motorista");
-		return (List<Motorista>) query.getResultList();
+	public static List<Motorista> listaMotoristas() {		
+		Controlador.init();
+		Query query = null;
+		List<Motorista> motoristas = null;
+		
+		try {
+			query = em.createQuery("FROM Motorista");
+			motoristas = (List<Motorista>) query.getResultList();
+		} catch (Exception e) {
+			return null;
+		} finally {
+			Controlador.close();
+		}
+		
+		return motoristas;
 	}
 
 	public static List<Carro> listaCarros() {
-		Query query = em.createQuery("FROM Carro"); // procurar consultas em HQL
-													// no google caso queira
-													// saber mais
-		return (List<Carro>) query.getResultList();
+		Controlador.init();
+		Query query = null;
+		List<Carro> carros = null;
+		
+		try {
+			query = em.createQuery("FROM Carro");
+			carros = (List<Carro>) query.getResultList();
+		} catch (Exception e) {
+			return null;
+		} finally {
+			Controlador.close();
+		}
+		
+		return carros;
 	}
 
 	// consultas HQL
@@ -61,6 +82,7 @@ public class Controlador {
 		Controlador.init();
 		Query query = null;
 		List<Cliente> clientes = null;
+		
 		try {
 			query = em.createQuery("FROM Cliente"); 
 			clientes = (List<Cliente>) query.getResultList(); 
