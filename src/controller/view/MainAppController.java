@@ -36,6 +36,9 @@ public class MainAppController {
     private TextField nomeCliente_Pagar;
 	
 	@FXML
+    private TextField carro_Pagar;
+	
+	@FXML
     private RadioButton dinheiro_Pagar;
 	
 	@FXML
@@ -218,26 +221,67 @@ public class MainAppController {
 	
 	private MainApp mainApp;
 	
+	private static void tamanhoMax(final TextField textField, final Integer length) {
+        textField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                if (newValue.length() > length)
+                    textField.setText(oldValue);
+            }
+        });
+    }
+	
+	public static void campoNumerico(final TextField textField) {
+        textField.lengthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if (newValue.intValue() > oldValue.intValue()) {
+                    char ch = textField.getText().charAt(oldValue.intValue());
+                    if (!(ch >= '0' && ch <= '9')) {
+                        textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+                    }
+                }
+            }
+        });
+    }
+	
+	public static void campoLetras(final TextField textField) {
+        textField.lengthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if (newValue.intValue() > oldValue.intValue()) {
+                    String ch = textField.getText(oldValue.intValue(), oldValue.intValue()+1);
+                    if (!(ch.matches("[a-zA-Z]"))) {
+                        textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+                    }
+                }
+            }
+        });
+    }
+	
 	public MainAppController() {
     }
 	
     @FXML
     private void initialize() {
-    	// variáveis globais dos acordeons----------------------------------------------------------------------------------------------------------------
+    	// variáveis globais dos acordeons----------------------------------------------------------------------------------------------------------------    	
     	List<Cliente> clientes = Controlador.listaClientes();
+    	List<Carro> carros = Controlador.listaCarros();
+    	
     	Collection<String> sugestoesClientes = new ArrayList<String>();
+    	Collection<String> sugestoesCarros = new ArrayList<String>();
+    	
     	HashMap<String,Cliente> mapClientes = new HashMap<String,Cliente>();
+    	HashMap<String,Carro> mapCarros = new HashMap<String,Carro>();
 
     	for (Cliente cliente : clientes){
-    		mapClientes.put(cliente.getNome(), cliente);
-    		sugestoesClientes.add(cliente.getNome());
+    		mapClientes.put(cliente.getNome() + " " + "(" + cliente.getCpf() + ")", cliente);
+    		sugestoesClientes.add(cliente.getNome() + " " + "(" + cliente.getCpf() + ")");
     	}
-    	
-    	List<Carro> carros = Controlador.listaCarros();
-    	HashMap<String,Carro> mapCarros = new HashMap<String,Carro>();
     	
     	for (Carro carro : carros){
     		mapCarros.put(carro.getNome(), carro);
+    		sugestoesCarros.add(carro.getNome());
     	}
     	
     	LocalDate localDate = LocalDate.now();
@@ -247,6 +291,9 @@ public class MainAppController {
     	// lógica do Pagar ---------------------------------------------------------------------------------------------------------------------
     	//autocomplete  
     	TextFields.bindAutoCompletion(nomeCliente_Pagar, sugestoesClientes);
+    	
+    	//autocomplete  
+    	TextFields.bindAutoCompletion(carro_Pagar, sugestoesCarros);
     	
     	//seta opções de danificação
     	ObservableList<String> dadosComboBoxDanificacao_Pagar = FXCollections.observableArrayList();
@@ -281,18 +328,11 @@ public class MainAppController {
     	
     	//seta o parcelamento
     	ObservableList<Integer> dadosComboBoxParcelamento_Pagar = FXCollections.observableArrayList();
-    	dadosComboBoxParcelamento_Pagar.add(1);
-    	dadosComboBoxParcelamento_Pagar.add(2);
-    	dadosComboBoxParcelamento_Pagar.add(3);
-    	dadosComboBoxParcelamento_Pagar.add(4);
-    	dadosComboBoxParcelamento_Pagar.add(5);
-    	dadosComboBoxParcelamento_Pagar.add(6);
-    	dadosComboBoxParcelamento_Pagar.add(7);
-    	dadosComboBoxParcelamento_Pagar.add(8);
-    	dadosComboBoxParcelamento_Pagar.add(9);
-    	dadosComboBoxParcelamento_Pagar.add(10);
-    	dadosComboBoxParcelamento_Pagar.add(11);
-    	dadosComboBoxParcelamento_Pagar.add(12);
+    	
+    	for(int k = 1; k < 13; k++){
+    		dadosComboBoxParcelamento_Pagar.add(k);
+    	}
+    	
     	parcelamento_Pagar.setItems(dadosComboBoxParcelamento_Pagar);
     	
     	//gera o modal do pagar
@@ -323,6 +363,8 @@ public class MainAppController {
     			      .showConfirm();
 
     		if (response == Dialog.ACTION_YES) {
+    			nomeCliente_Pagar.setText("");
+    			carro_Pagar.setText("");
     			danificacao_Pagar.getSelectionModel().clearSelection();
     			valorDanificacao_Pagar.setText("");
     			retorno_Pagar.getSelectionModel().clearSelection();
@@ -341,37 +383,7 @@ public class MainAppController {
     	// fim lógica do Pagar ----------------------------------------------------------------------------------------------------------------------------
     	
     	
-    	// lógica do Cadastrar Cliente ---------------------------------------------------------------------------------------------------------------------
-    	//evento outfocus no nome
-    	nomeCliente_CadastrarCliente.focusedProperty().addListener(new ChangeListener<Boolean>()
-    	{
-		    @Override
-		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-		    {
-		        if (!newPropertyValue)
-		        {
-		        	if(nomeCliente_CadastrarCliente.getText().equals(""))
-		        	{
-		        		clienteExiste_CadastrarCliente.setText("");
-		        		img_clienteExiste_CadastrarCliente.setImage(null);
-		        	}
-		        	else
-		        	{ 
-		        		if(mapClientes.containsKey(nomeCliente_CadastrarCliente.getText()))
-		        		{
-		        			clienteExiste_CadastrarCliente.setText("Cliente já existe");
-		        			img_clienteExiste_CadastrarCliente.setImage(new Image("img/error.png"));
-		        		}
-		        		else
-		        		{
-		        			clienteExiste_CadastrarCliente.setText("Cliente não existe");
-		        			img_clienteExiste_CadastrarCliente.setImage(new Image("img/ok.png"));
-		        		}			        	
-		        	}
-		        }
-		    }
-    	});
-    	
+    	// lógica do Cadastrar Cliente ---------------------------------------------------------------------------------------------------------------------    	
     	//evento outfocus no cpf
     	cpf_CadastrarCliente.focusedProperty().addListener(new ChangeListener<Boolean>()
     	{
@@ -379,7 +391,7 @@ public class MainAppController {
 		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
 		    {
 		        if (!newPropertyValue)
-		        {
+		        {       		
 		        	if(cpf_CadastrarCliente.getText().equals(""))
 		        	{
 		        		cpfInvalido_CadastrarCliente.setText("");
@@ -402,6 +414,14 @@ public class MainAppController {
 		    }
     	});
     	
+    	campoLetras(nomeCliente_CadastrarCliente);
+    	
+    	campoNumerico(cpf_CadastrarCliente);
+    	campoNumerico(idade_CadastrarCliente);
+    	
+    	tamanhoMax(cpf_CadastrarCliente, 11);
+    	tamanhoMax(idade_CadastrarCliente, 3);        
+    	
     	//gera o modal do cadastrar
     	cadastrar_CadastrarCliente.setOnAction((event) -> {
     		Action response = Dialogs.create()
@@ -415,7 +435,20 @@ public class MainAppController {
     			   && !cpf_CadastrarCliente.getText().equals("") && cpf_CadastrarCliente.getText().length() == 11 
     			   && !idade_CadastrarCliente.getText().equals(""))
     			{
-    				System.out.println("Foi");
+    				Cliente novoCliente = new Cliente();
+    				novoCliente.setNome(nomeCliente_CadastrarCliente.getText());
+    				novoCliente.setIdade(idade_CadastrarCliente.getText());
+    				novoCliente.setCpf(cpf_CadastrarCliente.getText());
+    				Controlador.salvar(novoCliente);
+    				
+    				Dialogs.create()
+    		        	.owner(null)
+    		        	.title("Aviso!")
+    		        	.masthead(null)
+    		        	.message("Dados enviados com sucesso!")
+    		        	.showInformation();
+    				
+    				initialize();
     			}
     			else{
     				aviso_CadastrarCliente.setText("*Todos os campos precisam estar preenchidos\n*O cliente não pode já estar cadastrado\n*O CPF deve ser válido");
@@ -547,10 +580,10 @@ public class MainAppController {
     		        .showConfirm();
 
     		if (response == Dialog.ACTION_YES) {
-    			if(mapClientes.containsKey(nomeCliente_ReservarAntecipado.getText())
-    			   && !mapClientes.get(nomeCliente_ReservarAntecipado.getText()).getListaNegra()
-    			   /*&& !filial_ReservarAntecipado.getValue().equals("") && !grupoCarro_ReservarAntecipado.getValue().equals("")
-    			   && !carro_ReservarAntecipado.getValue().equals("")*/)
+    			if(mapClientes.containsKey(nomeCliente_ReservarAntecipado.getText()) && !mapClientes.get(nomeCliente_ReservarAntecipado.getText()).getListaNegra()
+    			   && filial_ReservarAntecipado.getSelectionModel().getSelectedIndex() != -1 && grupoCarro_ReservarAntecipado.getSelectionModel().getSelectedIndex() != -1
+    			   && carro_ReservarAntecipado.getSelectionModel().getSelectedIndex() != -1 && dataInicio_ReservarAntecipado.getValue() != null &&
+    			   dataFim_ReservarAntecipado.getValue() != null)
     			{
     				System.out.println("Foi");
     			}
@@ -688,10 +721,9 @@ public class MainAppController {
     		        .showConfirm();
 
     		if (response == Dialog.ACTION_YES) {
-    			if(mapClientes.containsKey(nomeCliente_AlocarImediato.getText())
-    			   && !mapClientes.get(nomeCliente_AlocarImediato.getText()).getListaNegra()
-    			   /*&& !filial_AlocarImediato.getValue().equals("") && !grupoCarro_AlocarImediato.getValue().equals("")
-    			   && !carro_AlocarImediato.getValue().equals("")*/)
+    			if(mapClientes.containsKey(nomeCliente_AlocarImediato.getText()) && !mapClientes.get(nomeCliente_AlocarImediato.getText()).getListaNegra()
+    			   && filial_AlocarImediato.getSelectionModel().getSelectedIndex() != -1 && grupoCarro_AlocarImediato.getSelectionModel().getSelectedIndex() != -1
+    			   && carro_AlocarImediato.getSelectionModel().getSelectedIndex() != -1 && dataFim_AlocarImediato.getValue() != null)
     			{
     				System.out.println("Foi");
     			}
@@ -784,10 +816,8 @@ public class MainAppController {
     		        .showConfirm();
 
     		if (response == Dialog.ACTION_YES) {
-    			if(mapClientes.containsKey(nomeCliente_Vender.getText())
-    			   && !mapClientes.get(nomeCliente_Vender.getText()).getListaNegra()
-    			   /*&& !filial_Vender.getValue().equals("") && !grupoCarro_Vender.getValue().equals("")
-    			   && !carro_Vender.getValue().equals("")*/)
+    			if(mapClientes.containsKey(nomeCliente_Vender.getText()) && !mapClientes.get(nomeCliente_Vender.getText()).getListaNegra()
+    			   && !(carro_Vender.getSelectionModel().getSelectedIndex() == -1))
     			{
     				System.out.println("Foi");
     			}

@@ -26,28 +26,52 @@ public class Controlador {
 	}
 
 	public static void salvar(Object o) {
-		em.getTransaction().begin();
-		em.persist(o);
-		em.getTransaction().commit();
+		Controlador.init();
+
+		try {
+			em.getTransaction().begin();
+			em.persist(o);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			return;
+		} finally {
+			Controlador.close();
+		}
 	}
 
 	public static void alterar(Object o) {
-		em.getTransaction().begin();
-		em.merge(o);
-		em.getTransaction().commit();
+		Controlador.init();
+
+		try {
+			em.getTransaction().begin();
+			em.merge(o);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			return;
+		} finally {
+			Controlador.close();
+		}
 	}
 
 	public static void excluir(Object o) {
-		em.getTransaction().begin();
-		em.remove(o);
-		em.getTransaction().commit();
+		Controlador.init();
+
+		try {
+			em.getTransaction().begin();
+			em.remove(o);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			return;
+		} finally {
+			Controlador.close();
+		}
 	}
 
-	public static List<Motorista> listaMotoristas() {		
+	public static List<Motorista> listaMotoristas() {
 		Controlador.init();
 		Query query = null;
 		List<Motorista> motoristas = null;
-		
+
 		try {
 			query = em.createQuery("FROM Motorista");
 			motoristas = (List<Motorista>) query.getResultList();
@@ -56,7 +80,7 @@ public class Controlador {
 		} finally {
 			Controlador.close();
 		}
-		
+
 		return motoristas;
 	}
 
@@ -64,7 +88,7 @@ public class Controlador {
 		Controlador.init();
 		Query query = null;
 		List<Carro> carros = null;
-		
+
 		try {
 			query = em.createQuery("FROM Carro");
 			carros = (List<Carro>) query.getResultList();
@@ -73,7 +97,7 @@ public class Controlador {
 		} finally {
 			Controlador.close();
 		}
-		
+
 		return carros;
 	}
 
@@ -82,10 +106,10 @@ public class Controlador {
 		Controlador.init();
 		Query query = null;
 		List<Cliente> clientes = null;
-		
+
 		try {
-			query = em.createQuery("FROM Cliente"); 
-			clientes = (List<Cliente>) query.getResultList(); 
+			query = em.createQuery("FROM Cliente");
+			clientes = (List<Cliente>) query.getResultList();
 		} catch (Exception e) {
 			return null;
 		} finally {

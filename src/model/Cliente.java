@@ -31,6 +31,9 @@ public class Cliente implements Serializable {
 
 	@Lob
 	private String nome;
+	
+	@Lob
+	private String cpf;
 
 	//bi-directional many-to-one association to ClienteTemMotorista
 	@OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
@@ -151,6 +154,14 @@ public class Cliente implements Serializable {
 		reserva.setCliente(null);
 
 		return reserva;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 }
