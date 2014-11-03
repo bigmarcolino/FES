@@ -30,6 +30,12 @@ public class Carro implements Serializable {
 
 	@Lob
 	private String filial;
+	
+	@Lob
+	private String valor;
+	
+	@Lob
+	private String placa;
 
 	@Lob
 	private String grupo;
@@ -75,6 +81,22 @@ public class Carro implements Serializable {
 
 	public void setAno(String ano) {
 		this.ano = ano;
+	}
+	
+	public String getPlaca() {
+		return this.placa;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+	
+	public String getValor() {
+		return this.valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 
 	public boolean getDisponibilidade() {

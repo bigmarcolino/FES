@@ -135,6 +135,9 @@ public class MainAppController {
     private Label listaNegra_ReservarAntecipado;
 	
 	@FXML
+    private ImageView img_carro_ReservarAntecipado;
+	
+	@FXML
     private Button efetuarReserva_ReservarAntecipado;
 	
 	@FXML
@@ -171,6 +174,9 @@ public class MainAppController {
     private Label listaNegra_AlocarImediato;
 	
 	@FXML
+    private ImageView img_carro_AlocarImediato;
+	
+	@FXML
     private Button efetuarAlocacao_AlocarImediato;
 	
 	@FXML
@@ -195,6 +201,9 @@ public class MainAppController {
     private Label listaNegra_Vender;
 	
 	@FXML
+    private ImageView img_carro_Vender;
+	
+	@FXML
     private Button vender_Vender;
 	
 	@FXML
@@ -211,8 +220,9 @@ public class MainAppController {
         textField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                if (newValue.length() > length)
+                if (newValue.length() > length){
                     textField.setText(oldValue);
+                }
             }
         });
     }
@@ -277,7 +287,7 @@ public class MainAppController {
     	}
     	
     	for (Carro carro : carros){
-    		mapCarros.put(carro.getNome(), carro);
+    		mapCarros.put(carro.getNome() + " " + "(" + carro.getPlaca() + ")", carro);
     	}
     	
     	LocalDate localDate = LocalDate.now();
@@ -592,7 +602,7 @@ public class MainAppController {
     		
     		for (Carro carro : carros){
     			if(carro.getFilial().equals(filial_ReservarAntecipado.getValue()) && carro.getDisponibilidade() && carro.getGrupo().equals(grupoCarro_ReservarAntecipado.getValue())){
-    				carrosDisponiveis_ReservarAntecipado.add(carro.getNome());
+    				carrosDisponiveis_ReservarAntecipado.add(carro.getNome() + " " + "(" + carro.getPlaca() + ")");
     			}
     		}
     		
@@ -600,7 +610,7 @@ public class MainAppController {
     		carro_ReservarAntecipado.setItems(carrosDisponiveis_ReservarAntecipado);
         });
     	
-    	//permite escolher datas a partir de hoje
+    	//permite escolher datas apartir de hoje
     	final Callback<DatePicker, DateCell> dayCellFactoryHoje = 
             new Callback<DatePicker, DateCell>() {
                 @Override
@@ -621,7 +631,7 @@ public class MainAppController {
 	        
 	    dataInicio_ReservarAntecipado.setDayCellFactory(dayCellFactoryHoje);
     	
-    	//permite escolher datas a partir de amanhã
+    	//permite escolher datas apartir de um dia após a data inicial 
     	final Callback<DatePicker, DateCell> dayCellFactoryAmanha = 
             new Callback<DatePicker, DateCell>() {
                 @Override
@@ -630,17 +640,28 @@ public class MainAppController {
                         @Override
                         public void updateItem(LocalDate item, boolean empty) {
                             super.updateItem(item, empty);
-                            
-                            if (item.isBefore(localDate.plusDays(1))){
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
-                            }   
+                            if(dataInicio_ReservarAntecipado.getValue() != null){
+                            	if (item.isBefore(dataInicio_ReservarAntecipado.getValue().plusDays(1))){
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                } 
+                            }  
                         }
                     };
 	            }
 	        };
     	
 	    dataFim_ReservarAntecipado.setDayCellFactory(dayCellFactoryAmanha);
+	    
+	    carro_ReservarAntecipado.valueProperty().addListener(new ChangeListener<String>() {
+	        @Override
+	        public void changed(ObservableValue ov, String t, String t1) {
+	        	if(carro_ReservarAntecipado.getValue() != null){
+	        		String nomeImg = mapCarros.get(carro_ReservarAntecipado.getValue()).getModelo().toLowerCase().replaceAll("\\p{Z}","") + ".jpg";
+	    			img_carro_ReservarAntecipado.setImage(new Image("img/carros/" + nomeImg));
+	        	}	        	
+	        }    
+		});
     	
     	//gera o modal do reservar
     	efetuarReserva_ReservarAntecipado.setOnAction((event) -> {
@@ -669,6 +690,7 @@ public class MainAppController {
             		dataFim_ReservarAntecipado.setValue(null);
             		listaNegra_ReservarAntecipado.setText("");
             		img_listaNegra_ReservarAntecipado.setImage(null);
+            		img_carro_ReservarAntecipado.setImage(null);
             		aviso_ReservarAntecipado.setText("");
     				
     				Dialogs.create()
@@ -701,6 +723,7 @@ public class MainAppController {
         		dataFim_ReservarAntecipado.setValue(null);
         		listaNegra_ReservarAntecipado.setText("");
         		img_listaNegra_ReservarAntecipado.setImage(null);
+        		img_carro_ReservarAntecipado.setImage(null);
         		aviso_ReservarAntecipado.setText("");
     		}
     	});
@@ -792,7 +815,7 @@ public class MainAppController {
     		
     		for (Carro carro : carros){
     			if(carro.getFilial().equals(filial_AlocarImediato.getValue()) && carro.getDisponibilidade() && carro.getGrupo().equals(grupoCarro_AlocarImediato.getValue())){
-    				carrosDisponiveis_AlocarImediato.add(carro.getNome());
+    				carrosDisponiveis_AlocarImediato.add(carro.getNome() + " " + "(" + carro.getPlaca() + ")");
     			}
     		}
     		
@@ -822,7 +845,17 @@ public class MainAppController {
 	            }
 	        };
     	
-	    dataFim_AlocarImediato.setDayCellFactory(dayCellFactory);     
+	    dataFim_AlocarImediato.setDayCellFactory(dayCellFactory);
+	    
+	    carro_AlocarImediato.valueProperty().addListener(new ChangeListener<String>() {
+	        @Override
+	        public void changed(ObservableValue ov, String t, String t1) {
+	        	if(carro_AlocarImediato.getValue() != null){
+	        		String nomeImg = mapCarros.get(carro_AlocarImediato.getValue()).getModelo().toLowerCase().replaceAll("\\p{Z}","") + ".jpg";
+	    			img_carro_AlocarImediato.setImage(new Image("img/carros/" + nomeImg));
+	        	}	        	
+	        }    
+		});
 	   
     	//gera o modal do efetuar locação
     	efetuarAlocacao_AlocarImediato.setOnAction((event) -> {
@@ -849,6 +882,7 @@ public class MainAppController {
             		dataFim_AlocarImediato.setValue(null);
             		listaNegra_AlocarImediato.setText("");
             		img_listaNegra_AlocarImediato.setImage(null);
+            		img_carro_AlocarImediato.setImage(null);
             		aviso_ReservarAntecipado.setText("");
     				
     				Dialogs.create()
@@ -880,6 +914,7 @@ public class MainAppController {
         		dataFim_AlocarImediato.setValue(null);
         		listaNegra_AlocarImediato.setText("");
         		img_listaNegra_AlocarImediato.setImage(null);
+        		img_carro_AlocarImediato.setImage(null);
         		aviso_ReservarAntecipado.setText("");
     		}
     	});
@@ -932,11 +967,21 @@ public class MainAppController {
 		
 		for (Carro carro : carros){
 			if((carro.getQuilometragem() >= 40000 || !carro.getAno().equals("2014")) && carro.getDisponibilidade()){
-				carrosDisponiveis_Vender.add(carro.getNome());
+				carrosDisponiveis_Vender.add(carro.getNome() + " " + "(" + carro.getPlaca() + ")");
 			}
 		}
 		
 		carro_Vender.setItems(carrosDisponiveis_Vender);
+		
+		carro_Vender.valueProperty().addListener(new ChangeListener<String>() {
+	        @Override
+	        public void changed(ObservableValue ov, String t, String t1) {
+	        	if(carro_Vender.getValue() != null){
+	        		String nomeImg = mapCarros.get(carro_Vender.getValue()).getModelo().toLowerCase().replaceAll("\\p{Z}","") + ".jpg";
+	    			img_carro_Vender.setImage(new Image("img/carros/" + nomeImg));
+	        	}	        	
+	        }    
+		});
 
     	//gera o modal do vender
     	vender_Vender.setOnAction((event) -> {
@@ -959,6 +1004,7 @@ public class MainAppController {
             		carro_Vender.getSelectionModel().clearSelection();
             		listaNegra_Vender.setText("");
             		img_listaNegra_Vender.setImage(null);
+            		img_carro_Vender.setImage(null);
             		aviso_Vender.setText("");
     				
     				Dialogs.create()
@@ -987,6 +1033,7 @@ public class MainAppController {
         		carro_Vender.getSelectionModel().clearSelection();
         		listaNegra_Vender.setText("");
         		img_listaNegra_Vender.setImage(null);
+        		img_carro_Vender.setImage(null);
         		aviso_Vender.setText("");
     		}
     	});

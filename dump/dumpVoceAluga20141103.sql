@@ -26,9 +26,11 @@ DROP TABLE IF EXISTS `carro`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `carro` (
   `id_carro` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `grupo` text,
-  `modelo` text,
   `fabricante` text,
+  `modelo` text,
+  `placa` varchar(8) DEFAULT NULL,
+  `valor` varchar(11) DEFAULT NULL,
+  `grupo` text,
   `disponibilidade` tinyint(1) DEFAULT NULL,
   `quilometragem` double DEFAULT NULL,
   `ultima_revisao` date DEFAULT NULL,
@@ -36,7 +38,8 @@ CREATE TABLE `carro` (
   `ano` varchar(4) DEFAULT NULL,
   `necessita_de_conserto` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id_carro`),
-  UNIQUE KEY `id_carro` (`id_carro`)
+  UNIQUE KEY `id_carro` (`id_carro`),
+  UNIQUE KEY `placa_UNIQUE` (`placa`)
 ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -46,7 +49,7 @@ CREATE TABLE `carro` (
 
 LOCK TABLES `carro` WRITE;
 /*!40000 ALTER TABLE `carro` DISABLE KEYS */;
-INSERT INTO `carro` VALUES (1,'A','Gol','Volkswagen',1,15200.57,'2013-05-18','RJ','2005',0),(2,'B','Punto','Fiat',1,600,'2014-09-09','SP','2013',1),(3,'A','Chevette','Chevrolet',1,100900.1,'1999-11-20','MG','1978',0),(4,'D','Camaro','Chevrolet',1,1354,'2012-04-29','RJ','2014',0),(5,'B','Carrera','Porsche',0,50,'2013-05-18','SP','2013',0),(6,'A','New Fusion','Ford',1,10,'2012-08-13','MG','2014',0),(7,'A','Fiesta','Ford',1,15,'2013-09-12','RJ','2012',1),(8,'A','New Fiesta','Ford',0,5,'2014-01-14','SP','2014',1),(9,'A','City','Honda',1,15,'2013-02-22','MG','2014',1),(10,'A','New Civic','Honda',0,25,'2007-07-14','RJ','2009',1),(11,'A','Ka','Ford',0,148000,'2010-08-10','SP','2005',1),(12,'A','Optima','Kia',1,40000,'2013-10-17','RJ','2014',0),(13,'A','Elantra','Hyundai',1,20000,'2014-04-13','RJ','2012',0),(14,'A','Palio','Fiat',0,25000,'2013-02-01','SP','2007',1),(15,'B','HB20','Hyundai',0,15000,'2013-01-01','MG','2014',1),(16,'B','Cruze','Chevrolet',1,23403,'2012-11-11','SP','2012',0),(17,'B','Onix','Chevrolet',1,24582,'2012-12-17','RJ','2012',1),(18,'B','HB20s','Hyundai',0,23445,'2013-02-01','MG','2014',1),(19,'B','Celta','Volkswagen',1,36480,'2010-04-03','RJ','2005',0),(20,'B','Corolla','Toyota',1,40593,'2014-06-23','SP','2014',1),(21,'B','Fit','Honda',1,43454,'2013-05-18','RJ','2011',0),(22,'B','Stilo','Fiat',1,45356,'2012-12-17','SP','2010',1),(23,'B','Ceratto','Kia',1,3435,'2010-08-10','MG','2014',0),(24,'B','Camaro','Chevrolet',1,565654,'2013-10-17','RJ','2008',1),(25,'B','Meriva','Chevrolet',0,5565,'2012-11-11','SP','2012',1),(26,'C','Megáne','Renault',1,6556,'2007-07-14','MG','2013',0),(27,'C','Clio','Renault',1,56,'2013-10-17','RJ','2010',0),(28,'C','Brasília','Volkswagen',0,46,'2013-05-18','SP','2008',0),(29,'C','Fusca','Volkswagen',0,565,'2010-08-10','MG','2007',0),(30,'C','Kombi','Volkswagen',0,67,'2012-11-11','RJ','2006',1),(31,'C','Sandero','Renault',1,676,'2010-08-10','SP','2005',1),(32,'C','Ranger','Ford',1,767,'2013-02-22','MG','2010',1),(33,'C','A3','Audi',1,45,'2010-04-03','RJ','2011',0),(34,'C','Golf','Volkswagen',1,56566,'2014-09-09','SP','2012',0),(35,'C','Soul','Kia',1,455,'2014-01-14','MG','2000',0),(36,'C','TT','Audi',0,5566,'2013-02-22','RJ','2014',0),(37,'C','R8','Audi',1,7778,'2014-01-14','SP','2013',1),(38,'D','206','Peugeot',0,5777,'2012-11-11','MG','2011',1),(39,'D','207','Peugeot',0,66,'2014-09-09','RJ','2012',1),(40,'D','Lancer Evolution','Mitsubishi',0,56,'2012-11-11','SP','2011',0),(41,'D','Focus','Ford',0,56,'2010-08-10','MG','2003',1),(42,'D','Ecosport','Ford',1,46,'2014-01-14','RJ','2014',1),(43,'D','Blazer','Chevrolet',0,6,'2013-09-12','SP','2001',1),(44,'D','Gallardo','Lamborghini',1,56896,'2014-01-14','MG','2002',0),(45,'D','Diablo','Lamborghini',0,7686,'2014-01-14','RJ','2005',0),(46,'D','Mustang','Ford',1,8676,'2010-08-10','SP','2007',0),(47,'D','March','Nissan',0,76,'2013-09-12','MG','2014',0),(48,'D','350Z','Nissan',1,78668,'2014-09-09','RJ','2010',1),(49,'D','Veyron','Bugatti',1,876,'2012-11-11','SP','2014',1),(50,'D','Skyline','Nissan',0,54,'2013-09-12','MG','2010',1),(51,'D','Sentra','Nissan',0,66,'2013-09-12','RJ','2014',1);
+INSERT INTO `carro` VALUES (1,'Volkswagen','Gol','PLC6578','22000','A',1,15200.57,'2013-05-18','RJ','2005',0),(2,'Fiat','Punto','WWW8732','29000','B',1,600,'2014-09-09','SP','2013',1),(3,'Chevrolet','Chevette','UFC1234','35000','A',1,100900.1,'1999-11-20','MG','1978',0),(4,'Chevrolet','Camaro','WUC7856','250000','D',1,1354,'2012-04-29','RJ','2014',0),(5,'Porsche','Carrera','IEE6754','450000','B',0,50,'2013-05-18','SP','2013',0),(6,'Ford','New Fusion','JYC7463','110000','A',1,10,'2012-08-13','MG','2014',0),(7,'Ford','Fiesta Sedan','UUU8573','24000','A',1,15,'2013-09-12','RJ','2012',1),(8,'Ford','New Fiesta','HAT0392','37000','A',0,5,'2014-01-14','SP','2014',1),(9,'Honda','City','HIT7392','80000','A',1,15,'2013-02-22','MG','2014',1),(10,'Honda','New Civic','YYY9372','65000','A',0,25,'2007-07-14','RJ','2009',1),(11,'Ford','Ka','LOB3109','25000','A',0,148000,'2010-08-10','SP','2005',1),(12,'Kia','Optima','KXX5764','150000','A',1,40000,'2013-10-17','RJ','2014',0),(13,'Hyundai','Elantra','AAW5373','90000','A',1,20000,'2014-04-13','RJ','2012',0),(14,'Fiat','Palio','UUT7583','25000','A',0,25000,'2013-02-01','SP','2007',1),(15,'Hyundai','HB20','JJJ8473','30000','B',0,15000,'2013-01-01','MG','2014',1),(16,'Chevrolet','Cruze','IOF0938','60000','B',1,23403,'2012-11-11','SP','2012',0),(17,'Chevrolet','Onix','FFC7632','33000','B',1,24582,'2012-12-17','RJ','2012',1),(18,'Hyundai','HB20s','CRV2983','45000','B',0,23445,'2013-02-01','MG','2014',1),(19,'Volkswagen','Celta','RRN8366','20000','B',1,36480,'2010-04-03','RJ','2005',0),(20,'Toyota','Corolla','POO8374','55000','B',1,40593,'2014-06-23','SP','2014',1),(21,'Honda','Fit','POU7722','50000','B',1,43454,'2013-05-18','RJ','2011',0),(22,'Fiat','Stilo','YYU8473','30000','B',1,45356,'2012-12-17','SP','2010',1),(23,'Kia','Cerato','TIC7255','70000','B',1,3435,'2010-08-10','MG','2014',0),(24,'Chevrolet','Camaro','UFR9382','250000','B',1,565654,'2013-10-17','RJ','2008',1),(25,'Chevrolet','Meriva','ERT8732','25000','B',0,5565,'2012-11-11','SP','2012',1),(26,'Renault','Megáne','YTR1029','35000','C',1,6556,'2007-07-14','MG','2013',0),(27,'Renault','Clio','EYW9220','28000','C',1,56,'2013-10-17','RJ','2010',0),(28,'Volkswagen','Brasília','SBV2039','5000','C',0,46,'2013-05-18','SP','2008',0),(29,'Volkswagen','New Beetle','NBS2901','30000','C',0,565,'2010-08-10','MG','2007',0),(30,'Volkswagen','Kombi','CNN3823','5000','C',0,67,'2012-11-11','RJ','2006',1),(31,'Renault','Sandero','LLO8372','25000','C',1,676,'2010-08-10','SP','2005',1),(32,'Ford','Ranger','GTT8273','70000','C',1,767,'2013-02-22','MG','2010',1),(33,'Audi','A3','DBZ6662','40000','C',1,45,'2010-04-03','RJ','2011',0),(34,'Volkswagen','Golf','JHD8932','30000','C',1,56566,'2014-09-09','SP','2012',0),(35,'Kia','Soul','FOF6721','30000','C',1,455,'2014-01-14','MG','2000',0),(36,'Audi','TT','BGS8636','200000','C',0,5566,'2013-02-22','RJ','2014',0),(37,'Audi','R8','CPT9021','1500000','C',1,7778,'2014-01-14','SP','2013',1),(38,'Peugeot','206','HSV7211','20000','D',0,5777,'2012-11-11','MG','2011',1),(39,'Peugeot','207','PLS7832','28000','D',0,66,'2014-09-09','RJ','2012',1),(40,'Mitsubishi','Lancer Evolution','BSA9302','800000','D',0,56,'2012-11-11','SP','2011',0),(41,'Ford','Focus','DSA7311','28000','D',0,56,'2010-08-10','MG','2003',1),(42,'Ford','Ecosport','JMN3184','60000','D',1,46,'2014-01-14','RJ','2014',1),(43,'Chevrolet','Blazer','MMS7832','50000','D',0,6,'2013-09-12','SP','2001',1),(44,'Lamborghini','Gallardo','KKT9042','4000000','D',1,56896,'2014-01-14','MG','2002',0),(45,'Lamborghini','Aventator','OPR9364','2000000','D',0,7686,'2014-01-14','RJ','2005',0),(46,'Ford','Mustang','QPR7484','1800000','D',1,8676,'2010-08-10','SP','2007',0),(47,'Nissan','March','MAN9042','26000','D',0,76,'2013-09-12','MG','2014',0),(48,'Nissan','350Z','UTD5462','900000','D',1,78668,'2014-09-09','RJ','2010',1),(49,'Bugatti','Veyron','HHH7832','5000000','D',1,876,'2012-11-11','SP','2014',1),(50,'Nissan','Skyline','FBK7483','750000','D',0,54,'2013-09-12','MG','2010',1),(51,'Nissan','Sentra','POR8573','70000','D',0,66,'2013-09-12','RJ','2014',1);
 /*!40000 ALTER TABLE `carro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +130,7 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`id_cliente`),
   UNIQUE KEY `id_cliente` (`id_cliente`),
   UNIQUE KEY `cpf_UNIQUE` (`cpf`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +139,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'Roberto Freitas','25',0,NULL,'12345678901'),(2,'José de Faria','18',0,NULL,'22132344333'),(3,'Maria Rocha','34',1,NULL,'23333455332'),(4,'Bruno de Almeida','19',1,NULL,'11223467432'),(5,'Elias Monteiro','38',0,NULL,'35563223467');
+INSERT INTO `cliente` VALUES (1,'Roberto Freitas','25',0,NULL,'12345678901'),(2,'José de Faria','18',0,NULL,'22132344333'),(3,'Maria Rocha','34',1,NULL,'23333455332'),(4,'Bruno de Almeida','19',1,NULL,'11223467432'),(5,'Elias Monteiro','38',0,NULL,'35563223467'),(6,'Gobbi','21',0,NULL,'13473382734'),(7,'Marcus','12',0,NULL,'12635437211'),(8,'Kaique','12',0,NULL,'12345763211'),(9,'Guilherme Gobbi','22',0,NULL,'12342123456'),(10,'Pati','23',0,NULL,'09876543213'),(11,'raul','23',0,NULL,'09855553213'),(12,'Igor Balofo','15',0,NULL,'13409283232'),(13,'Marcus Vinicius','23',0,NULL,'12345678921'),(14,'Hugo','24',0,NULL,'12345123456');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,4 +343,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-29  4:08:25
+-- Dump completed on 2014-11-03 12:17:25

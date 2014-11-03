@@ -37,7 +37,7 @@
                                           <Font name="System Bold" size="16.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="valorDanificacao_Pagar" layoutX="653.0" layoutY="136.0" prefHeight="25.0" prefWidth="120.0" promptText="Valor danificaçao" />
+                                    <TextField fx:id="valorDanificacao_Pagar" layoutX="653.0" layoutY="136.0" prefHeight="25.0" prefWidth="120.0" promptText="Valor danificação" />
                                     <TextField fx:id="valorRetorno_Pagar" layoutX="653.0" layoutY="188.0" prefHeight="25.0" prefWidth="120.0" promptText="Valor retorno" />
                                     <TextField fx:id="valorDesconto_Pagar" layoutX="653.0" layoutY="240.0" prefHeight="25.0" prefWidth="120.0" promptText="Valor desconto" />
                                     <Label layoutX="22.0" layoutY="16.0" text="Nome do cliente" />
@@ -71,8 +71,8 @@
                            <content>
                               <AnchorPane>
                                  <children>
-                                    <Label layoutX="24.0" layoutY="29.0" text="Nome" />
-                                    <TextField fx:id="nomeCliente_CadastrarCliente" layoutX="83.0" layoutY="25.0" prefHeight="25.0" prefWidth="247.0" />
+                                    <Label layoutX="25.0" layoutY="17.0" text="Nome" />
+                                    <TextField fx:id="nomeCliente_CadastrarCliente" layoutX="24.0" layoutY="34.0" prefHeight="25.0" prefWidth="247.0" />
                                     <Separator layoutX="415.0" layoutY="25.0" orientation="VERTICAL" prefHeight="238.0" prefWidth="6.0" />
                                     <Button fx:id="cadastrar_CadastrarCliente" layoutX="97.0" layoutY="290.0" mnemonicParsing="false" text="Cadastrar" />
                                     <Button fx:id="limpar_CadastrarCliente" layoutX="217.0" layoutY="290.0" mnemonicParsing="false" text="Limpar" />
@@ -81,10 +81,10 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="cpf_CadastrarCliente" layoutX="83.0" layoutY="75.0" prefHeight="25.0" prefWidth="247.0" />
-                                    <Label layoutX="24.0" layoutY="79.0" text="CPF" />
-                                    <TextField fx:id="idade_CadastrarCliente" layoutX="83.0" layoutY="125.0" prefHeight="25.0" prefWidth="247.0" />
-                                    <Label layoutX="24.0" layoutY="129.0" text="Idade" />
+                                    <TextField fx:id="cpf_CadastrarCliente" layoutX="26.0" layoutY="92.0" prefHeight="25.0" prefWidth="154.0" />
+                                    <Label layoutX="27.0" layoutY="75.0" text="CPF" />
+                                    <TextField fx:id="idade_CadastrarCliente" layoutX="210.0" layoutY="91.0" prefHeight="25.0" prefWidth="60.0" />
+                                    <Label layoutX="211.0" layoutY="74.0" text="Idade" />
                                     <ImageView fx:id="img_cpfInvalido_CadastrarCliente" fitHeight="36.0" fitWidth="39.0" layoutX="445.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
                                     <Label fx:id="cpfInvalido_CadastrarCliente" layoutX="494.0" layoutY="77.0">
                                        <font>
@@ -98,32 +98,33 @@
                            <content>
                               <AnchorPane>
                                  <children>
-                                    <Label layoutX="24.0" layoutY="29.0" text="Nome do cliente" />
-                                    <TextField fx:id="nomeCliente_ReservarAntecipado" layoutX="133.0" layoutY="25.0" prefHeight="25.0" prefWidth="247.0" />
-                                    <ComboBox fx:id="grupoCarro_ReservarAntecipado" layoutX="133.0" layoutY="108.0" prefWidth="174.0" />
-                                    <Label layoutX="23.0" layoutY="112.0" text="Grupo do carro" />
-                                    <Label layoutX="24.0" layoutY="200.0" text="Data de início" />
-                                    <Label layoutX="24.0" layoutY="243.0" text="Data de fim" />
-                                    <DatePicker fx:id="dataInicio_ReservarAntecipado" editable="false" layoutX="133.0" layoutY="196.0" opacity="0.94" />
-                                    <DatePicker fx:id="dataFim_ReservarAntecipado" editable="false" layoutX="133.0" layoutY="239.0" />
-                                    <Separator layoutX="409.0" layoutY="25.0" orientation="VERTICAL" prefHeight="238.0" prefWidth="6.0" />
-                                    <Label layoutX="23.0" layoutY="156.0" text="Carro" />
-                                    <ComboBox fx:id="carro_ReservarAntecipado" layoutX="133.0" layoutY="152.0" prefWidth="174.0" />
-                                    <Label fx:id="listaNegra_ReservarAntecipado" layoutX="494.0" layoutY="25.0">
+                                    <Label layoutX="24.0" layoutY="9.0" text="Nome do cliente" />
+                                    <TextField fx:id="nomeCliente_ReservarAntecipado" layoutX="24.0" layoutY="27.0" prefHeight="25.0" prefWidth="247.0" />
+                                    <ComboBox fx:id="grupoCarro_ReservarAntecipado" layoutX="145.0" layoutY="79.0" prefHeight="25.0" prefWidth="85.0" />
+                                    <Label layoutX="145.0" layoutY="60.0" text="Grupo do carro" />
+                                    <Label layoutX="25.0" layoutY="168.0" text="Data de início" />
+                                    <Label layoutX="24.0" layoutY="223.0" text="Data de fim" />
+                                    <DatePicker fx:id="dataInicio_ReservarAntecipado" editable="false" layoutX="25.0" layoutY="188.0" opacity="0.94" />
+                                    <DatePicker fx:id="dataFim_ReservarAntecipado" editable="false" layoutX="25.0" layoutY="243.0" />
+                                    <Separator layoutX="299.0" layoutY="25.0" orientation="VERTICAL" prefHeight="238.0" prefWidth="6.0" />
+                                    <Label layoutX="24.0" layoutY="115.0" text="Carro" />
+                                    <ComboBox fx:id="carro_ReservarAntecipado" layoutX="24.0" layoutY="132.0" prefWidth="247.0" />
+                                    <Label fx:id="listaNegra_ReservarAntecipado" layoutX="369.0" layoutY="22.0">
                                        <font>
                                           <Font size="17.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="efetuarReserva_ReservarAntecipado" layoutX="97.0" layoutY="290.0" mnemonicParsing="false" text="Efetuar reserva" />
-                                    <Button fx:id="limpar_ReservarAntecipado" layoutX="257.0" layoutY="290.0" mnemonicParsing="false" text="Limpar" />
-                                    <ImageView fx:id="img_listaNegra_ReservarAntecipado" fitHeight="36.0" fitWidth="39.0" layoutX="445.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label layoutX="23.0" layoutY="72.0" text="Filial" />
-                                    <ComboBox fx:id="filial_ReservarAntecipado" layoutX="133.0" layoutY="68.0" prefWidth="174.0" />
-                                    <Label fx:id="aviso_ReservarAntecipado" layoutX="445.0" layoutY="284.0" textFill="#f80000">
+                                    <Button fx:id="efetuarReserva_ReservarAntecipado" layoutX="64.0" layoutY="290.0" mnemonicParsing="false" text="Efetuar reserva" />
+                                    <Button fx:id="limpar_ReservarAntecipado" layoutX="186.0" layoutY="290.0" mnemonicParsing="false" text="Limpar" />
+                                    <ImageView fx:id="img_listaNegra_ReservarAntecipado" fitHeight="36.0" fitWidth="39.0" layoutX="320.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label layoutX="25.0" layoutY="62.0" text="Filial" />
+                                    <ComboBox fx:id="filial_ReservarAntecipado" layoutX="24.0" layoutY="79.0" prefHeight="25.0" prefWidth="85.0" />
+                                    <Label fx:id="aviso_ReservarAntecipado" layoutX="321.0" layoutY="294.0" textFill="#f80000">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
+                                    <ImageView fx:id="img_carro_ReservarAntecipado" fitHeight="221.0" fitWidth="445.0" layoutX="330.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                            </content></TitledPane>
@@ -131,32 +132,33 @@
                            <content>
                               <AnchorPane>
                                  <children>
-                                    <Label layoutX="24.0" layoutY="29.0" text="Nome do cliente" />
-                                    <TextField fx:id="nomeCliente_AlocarImediato" layoutX="133.0" layoutY="25.0" prefHeight="25.0" prefWidth="247.0" />
-                                    <ComboBox fx:id="grupoCarro_AlocarImediato" layoutX="133.0" layoutY="108.0" prefWidth="174.0" />
-                                    <Label layoutX="23.0" layoutY="112.0" text="Grupo do carro" />
-                                    <Label layoutX="24.0" layoutY="200.0" text="Data de início" />
-                                    <Label layoutX="24.0" layoutY="243.0" text="Data de fim" />
-                                    <DatePicker fx:id="dataInicio_AlocarImediato" disable="true" editable="false" layoutX="133.0" layoutY="196.0" opacity="0.94" />
-                                    <DatePicker fx:id="dataFim_AlocarImediato" editable="false" layoutX="133.0" layoutY="239.0" />
-                                    <Separator layoutX="409.0" layoutY="25.0" orientation="VERTICAL" prefHeight="238.0" prefWidth="6.0" />
-                                    <Label layoutX="23.0" layoutY="156.0" text="Carro" />
-                                    <ComboBox fx:id="carro_AlocarImediato" layoutX="133.0" layoutY="152.0" prefWidth="174.0" />
-                                    <Label fx:id="listaNegra_AlocarImediato" layoutX="494.0" layoutY="25.0">
+                                    <Label layoutX="24.0" layoutY="10.0" text="Nome do cliente" />
+                                    <TextField fx:id="nomeCliente_AlocarImediato" layoutX="24.0" layoutY="27.0" prefHeight="25.0" prefWidth="247.0" />
+                                    <ComboBox fx:id="grupoCarro_AlocarImediato" layoutX="158.0" layoutY="80.0" prefWidth="85.0" />
+                                    <Label layoutX="158.0" layoutY="62.0" text="Grupo do carro" />
+                                    <Label layoutX="26.0" layoutY="170.0" text="Data de início" />
+                                    <Label layoutX="26.0" layoutY="224.0" text="Data de fim" />
+                                    <DatePicker fx:id="dataInicio_AlocarImediato" disable="true" editable="false" layoutX="25.0" layoutY="187.0" opacity="0.94" />
+                                    <DatePicker fx:id="dataFim_AlocarImediato" editable="false" layoutX="25.0" layoutY="241.0" />
+                                    <Separator layoutX="299.0" layoutY="25.0" orientation="VERTICAL" prefHeight="238.0" prefWidth="6.0" />
+                                    <Label layoutX="26.0" layoutY="115.0" text="Carro" />
+                                    <ComboBox fx:id="carro_AlocarImediato" layoutX="25.0" layoutY="132.0" prefWidth="247.0" />
+                                    <Label fx:id="listaNegra_AlocarImediato" layoutX="369.0" layoutY="22.0">
                                        <font>
                                           <Font size="17.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="efetuarAlocacao_AlocarImediato" layoutX="97.0" layoutY="290.0" mnemonicParsing="false" text="Efetuar alocação" />
-                                    <Button fx:id="limpar_AlocarImediato" layoutX="257.0" layoutY="290.0" mnemonicParsing="false" text="Limpar" />
-                                    <ImageView fx:id="img_listaNegra_AlocarImediato" fitHeight="36.0" fitWidth="39.0" layoutX="445.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label layoutX="23.0" layoutY="72.0" text="Filial" />
-                                    <ComboBox fx:id="filial_AlocarImediato" layoutX="133.0" layoutY="68.0" prefWidth="174.0" />
-                                    <Label fx:id="aviso_AlocarImediato" layoutX="445.0" layoutY="284.0" textFill="#f80000">
+                                    <Button fx:id="efetuarAlocacao_AlocarImediato" layoutX="56.0" layoutY="292.0" mnemonicParsing="false" text="Efetuar alocação" />
+                                    <Button fx:id="limpar_AlocarImediato" layoutX="196.0" layoutY="292.0" mnemonicParsing="false" text="Limpar" />
+                                    <ImageView fx:id="img_listaNegra_AlocarImediato" fitHeight="36.0" fitWidth="39.0" layoutX="320.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label layoutX="25.0" layoutY="62.0" text="Filial" />
+                                    <ComboBox fx:id="filial_AlocarImediato" layoutX="25.0" layoutY="79.0" prefWidth="85.0" />
+                                    <Label fx:id="aviso_AlocarImediato" layoutX="321.0" layoutY="294.0" textFill="#f80000">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
+                                    <ImageView fx:id="img_carro_AlocarImediato" fitHeight="221.0" fitWidth="445.0" layoutX="330.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -173,24 +175,25 @@
                            <content>
                               <AnchorPane>
                                  <children>
-                                    <Label layoutX="24.0" layoutY="29.0" text="Nome do cliente" />
-                                    <TextField fx:id="nomeCliente_Vender" layoutX="133.0" layoutY="25.0" prefHeight="25.0" prefWidth="247.0" />
-                                    <Separator layoutX="409.0" layoutY="25.0" orientation="VERTICAL" prefHeight="238.0" prefWidth="6.0" />
-                                    <Label layoutX="23.0" layoutY="76.0" text="Carro" />
-                                    <ComboBox fx:id="carro_Vender" layoutX="133.0" layoutY="72.0" prefWidth="174.0" />
-                                    <Label fx:id="listaNegra_Vender" layoutX="494.0" layoutY="25.0">
+                                    <Label layoutX="23.0" layoutY="17.0" text="Nome do cliente" />
+                                    <TextField fx:id="nomeCliente_Vender" layoutX="23.0" layoutY="35.0" prefHeight="25.0" prefWidth="247.0" />
+                                    <Separator layoutX="289.0" layoutY="25.0" orientation="VERTICAL" prefHeight="238.0" prefWidth="6.0" />
+                                    <Label layoutX="23.0" layoutY="96.0" text="Carro" />
+                                    <ComboBox fx:id="carro_Vender" layoutX="23.0" layoutY="114.0" prefHeight="25.0" prefWidth="247.0" />
+                                    <Label fx:id="listaNegra_Vender" layoutX="369.0" layoutY="22.0">
                                        <font>
                                           <Font size="17.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="vender_Vender" layoutX="97.0" layoutY="250.0" mnemonicParsing="false" text="Vender" />
-                                    <Button fx:id="limpar_Vender" layoutX="217.0" layoutY="250.0" mnemonicParsing="false" text="Limpar" />
-                                    <ImageView fx:id="img_listaNegra_Vender" fitHeight="36.0" fitWidth="39.0" layoutX="445.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label fx:id="aviso_Vender" layoutX="445.0" layoutY="284.0" textFill="#f80000">
+                                    <Button fx:id="vender_Vender" layoutX="71.0" layoutY="250.0" mnemonicParsing="false" text="Vender" />
+                                    <Button fx:id="limpar_Vender" layoutX="161.0" layoutY="250.0" mnemonicParsing="false" text="Limpar" />
+                                    <ImageView fx:id="img_listaNegra_Vender" fitHeight="36.0" fitWidth="39.0" layoutX="320.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="aviso_Vender" layoutX="321.0" layoutY="294.0" textFill="#f80000">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
+                                    <ImageView fx:id="img_carro_Vender" fitHeight="221.0" fitWidth="445.0" layoutX="330.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                            </content></TitledPane>
