@@ -25,10 +25,13 @@ public class Locacao implements Serializable {
 	@Column(name="agente_de_locacao")
 	private String agenteDeLocacao;
 
-	private boolean ativo;
-
 	@Temporal(TemporalType.DATE)
-	private Date data;
+	@Column(name="data_inicio")
+	private Date dataInicio;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="data_fim")
+	private Date dataFim;
 
 	@Column(name="id_carro")
 	private String idCarro;
@@ -73,20 +76,20 @@ public class Locacao implements Serializable {
 		this.agenteDeLocacao = agenteDeLocacao;
 	}
 
-	public boolean getAtivo() {
-		return this.ativo;
+	public Date getDataInicio() {
+		return dataInicio;
 	}
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
 	}
 
-	public Date getData() {
-		return this.data;
+	public Date getDataFim() {
+		return dataFim;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
 	}
 
 	public String getIdCarro() {

@@ -36,6 +36,8 @@
 		<class>model.Motorista</class>
 		<class>model.Pagamento</class>
 		<class>model.Reserva</class>
+		<class>model.ClienteTemCarro</class>
+		<class>model.Venda</class>
 		<properties>
 			<!-- dados da conexao -->
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

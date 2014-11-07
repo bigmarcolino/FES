@@ -1,7 +1,9 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -59,11 +61,17 @@ public class Carro implements Serializable {
 	//bi-directional many-to-one association to CarroTemReserva
 	@OneToMany(mappedBy="carro", fetch=FetchType.EAGER)
 	private List<CarroTemReserva> carroTemReservas;
-
-	//bi-directional many-to-one association to Manutencao
+	
+	//bi-directional many-to-one association to ClienteTemCarro
+	@OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
+	private List<ClienteTemCarro> clienteTemCarros;
+	
 	@OneToMany(mappedBy="carro", fetch=FetchType.EAGER)
 	private List<Manutencao> manutencaos;
 
+	@OneToMany(mappedBy="carro", fetch=FetchType.EAGER)
+	private List<Venda> vendas;
+	
 	public Carro() {
 	}
 
@@ -231,5 +239,21 @@ public class Carro implements Serializable {
 		manutencao.setCarro(null);
 
 		return manutencao;
+	}
+
+	public List<ClienteTemCarro> getClienteTemCarros() {
+		return clienteTemCarros;
+	}
+
+	public void setClienteTemCarros(List<ClienteTemCarro> clienteTemCarros) {
+		this.clienteTemCarros = clienteTemCarros;
+	}
+
+	public List<Venda> getVendas() {
+		return vendas;
+	}
+
+	public void setVendas(List<Venda> vendas) {
+		this.vendas = vendas;
 	}
 }

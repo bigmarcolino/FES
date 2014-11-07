@@ -38,6 +38,10 @@ public class Cliente implements Serializable {
 	//bi-directional many-to-one association to ClienteTemMotorista
 	@OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
 	private List<ClienteTemMotorista> clienteTemMotoristas;
+	
+	//bi-directional many-to-one association to ClienteTemCarro
+	@OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
+	private List<ClienteTemCarro> clienteTemCarros;
 
 	//bi-directional many-to-one association to Locacao
 	@OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
@@ -162,6 +166,14 @@ public class Cliente implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public List<ClienteTemCarro> getClienteTemCarros() {
+		return clienteTemCarros;
+	}
+
+	public void setClienteTemCarros(List<ClienteTemCarro> clienteTemCarros) {
+		this.clienteTemCarros = clienteTemCarros;
 	}
 
 }

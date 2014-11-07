@@ -1,11 +1,14 @@
 package controller.view;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,15 +29,24 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import model.Carro;
+import model.CarroTemLocacao;
+import model.CarroTemReserva;
 import model.Cliente;
+import model.ClienteTemCarro;
+import model.Locacao;
+import model.Reserva;
+import model.Venda;
+
 
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 
+
 import controller.Controlador;
 import controller.MainApp;
+
 
 public class MainAppController {
 	// atributos do acordeon Pagar ------------------------------------------------------------------------------------------------------
@@ -289,6 +301,22 @@ public class MainAppController {
     	for (Carro carro : carros){
     		mapCarros.put(carro.getNome() + " " + "(" + carro.getPlaca() + ")", carro);
     	}
+    	
+    	/* excluir dps
+    	System.out.println("*******************************");
+    	for (Cliente cliente : clientes){
+    		System.out.println("Cliente: ");
+    		System.out.println(cliente.getIdCliente());
+    		System.out.println("Reservas");
+    		for (Reserva reserva : cliente.getReservas())
+    			System.out.println(reserva.getIdCarro());
+    		System.out.println("Locacoes");
+    		for (Locacao locacao : cliente.getLocacaos())
+    			System.out.println(locacao.getIdCarro());
+    		System.out.println("-------------");
+    		
+    	}    		
+    	*/
     	
     	LocalDate localDate = LocalDate.now();
     	// fim das variaveis globais ----------------------------------------------------------------------------------------------------------------------
@@ -677,8 +705,28 @@ public class MainAppController {
     			   && carro_ReservarAntecipado.getSelectionModel().getSelectedIndex() != -1 && dataInicio_ReservarAntecipado.getValue() != null &&
     			   dataFim_ReservarAntecipado.getValue() != null)
     			{
-    				//substituir pela lógica de inserção no banco
-    				System.out.println("Foi");
+    				Cliente cliente = mapClientes.get(nomeCliente_ReservarAntecipado.getText());
+    				Carro carro = mapCarros.get(carro_ReservarAntecipado.getSelectionModel().getSelectedItem());
+    				carro.setDisponibilidade(false);
+    				Controlador.alterar(carro);
+    				
+    				Date dataInicio = Date.from(dataInicio_ReservarAntecipado.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+    				Date dataFim = Date.from(dataFim_ReservarAntecipado.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+    				
+    				Reserva reserva = new Reserva();
+    				reserva.setCliente(cliente);
+    				reserva.setIdCarro(carro.getIdCarro());
+    				reserva.setDataReserva(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    				reserva.setDataInicio(dataInicio);
+    				reserva.setDataFim(dataFim);
+    				
+    				Controlador.salvar(reserva);
+    				
+    				CarroTemReserva ctr = new CarroTemReserva();
+    				ctr.setCarro(carro);
+    				ctr.setReserva(reserva);
+    				
+    				Controlador.salvar(ctr);
     				
     				initialize();
     				
@@ -870,8 +918,26 @@ public class MainAppController {
     			   && filial_AlocarImediato.getSelectionModel().getSelectedIndex() != -1 && grupoCarro_AlocarImediato.getSelectionModel().getSelectedIndex() != -1
     			   && carro_AlocarImediato.getSelectionModel().getSelectedIndex() != -1 && dataFim_AlocarImediato.getValue() != null)
     			{
-    				//substituir pela lógica de inserção no banco
-    				System.out.println("Foi");
+    				Cliente cliente = mapClientes.get(nomeCliente_AlocarImediato.getText());
+    				Carro carro = mapCarros.get(carro_AlocarImediato.getSelectionModel().getSelectedItem());
+    				carro.setDisponibilidade(false);
+    				Controlador.alterar(carro);
+    				
+    				Date dataInicio = Date.from(dataInicio_AlocarImediato.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+    				Date dataFim = Date.from(dataFim_AlocarImediato.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+    				
+    				Locacao locacao = new Locacao();
+    				locacao.setCliente(cliente);
+    				locacao.setIdCarro(carro.getIdCarro());
+    				locacao.setDataInicio(dataInicio);
+    				locacao.setDataFim(dataFim);
+    				
+    				Controlador.salvar(locacao);
+    				
+    				CarroTemLocacao ctl = new CarroTemLocacao();
+    				ctl.setCarro(carro);
+    				ctl.setLocacao(locacao);
+    				Controlador.salvar(ctl);
     				
     				initialize();
     				
@@ -995,8 +1061,19 @@ public class MainAppController {
     			if(mapClientes.containsKey(nomeCliente_Vender.getText()) && !mapClientes.get(nomeCliente_Vender.getText()).getListaNegra()
     			   && !(carro_Vender.getSelectionModel().getSelectedIndex() == -1))
     			{
-    				//substituir pela lógica de inserção no banco
-    				System.out.println("Foi");
+    				ClienteTemCarro ctc = new ClienteTemCarro();
+    				Carro carro = mapCarros.get(carro_Vender.getValue());
+    				carro.setDisponibilidade(false);
+    				Controlador.alterar(carro);
+    				
+    				Cliente cliente = mapClientes.get(nomeCliente_Vender.getText());
+    				ctc.setCarro(carro);
+    				ctc.setCliente(cliente);
+    				Controlador.salvar(ctc);
+    				
+    				Venda venda = new Venda();    				
+    				venda.setCarro(carro);
+    				Controlador.salvar(venda);
     				
     				initialize();
     				

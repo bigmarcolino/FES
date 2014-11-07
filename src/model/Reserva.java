@@ -20,6 +20,10 @@ public class Reserva implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_reserva")
 	private String idReserva;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="data_reserva")
+	private Date dataReserva;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="data_fim")
@@ -64,6 +68,14 @@ public class Reserva implements Serializable {
 
 	public void setIdReserva(String idReserva) {
 		this.idReserva = idReserva;
+	}
+	
+	public Date getDataReserva() {
+		return dataReserva;
+	}
+
+	public void setDataReserva(Date dataReserva) {
+		this.dataReserva = dataReserva;
 	}
 
 	public Date getDataFim() {

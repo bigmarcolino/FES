@@ -1,8 +1,11 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -45,6 +48,9 @@ public class Pagamento implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_reserva")
 	private Reserva reserva;
+	
+	@OneToMany(mappedBy="pagamento", fetch=FetchType.EAGER)
+	private List<Venda> vendas;
 
 	public Pagamento() {
 	}
@@ -111,6 +117,14 @@ public class Pagamento implements Serializable {
 
 	public void setReserva(Reserva reserva) {
 		this.reserva = reserva;
+	}
+
+	public List<Venda> getVendas() {
+		return vendas;
+	}
+
+	public void setVendas(List<Venda> vendas) {
+		this.vendas = vendas;
 	}
 
 }
