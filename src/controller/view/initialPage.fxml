@@ -32,7 +32,7 @@
                                     <Label layoutX="542.0" layoutY="223.0" text="Parcelamento" />
                                     <ComboBox fx:id="parcelamento_Pagar" layoutX="520.0" layoutY="240.0" prefHeight="25.0" prefWidth="116.0" />
                                     <Label layoutX="599.0" layoutY="19.0" text="TOTAL A PAGAR" />
-                                    <Label fx:id="totalPagar_Pagar" layoutX="569.0" layoutY="36.0" prefHeight="25.0" prefWidth="147.0" style="-fx-alignment: center; -fx-background-color: #ff747474;" text="R$ 0.00" textAlignment="CENTER">
+                                    <Label fx:id="totalPagar_Pagar" layoutX="569.0" layoutY="36.0" prefHeight="25.0" prefWidth="147.0" style="-fx-alignment: center; -fx-background-color: #ff747474;" text="R$ 0.0" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>
@@ -50,10 +50,10 @@
                                     </Label>
                                     <TableView fx:id="tabela_Pagar" layoutX="22.0" layoutY="72.0" prefHeight="298.0" prefWidth="472.0">
                                       <columns>
-                                        <TableColumn editable="false" prefWidth="184.0" text="Carro" />
-                                        <TableColumn editable="false" prefWidth="104.0" text="Placa" />
-                                          <TableColumn editable="false" prefWidth="82.0" text="Valor" />
-                                          <TableColumn editable="false" prefWidth="101.0" text="Valor do atraso" />
+                                        <TableColumn fx:id="carroTabela_Pagar" editable="false" prefWidth="184.0" text="Carro" />
+                                        <TableColumn fx:id="placaTabela_Pagar" editable="false" prefWidth="104.0" text="Placa" />
+                                          <TableColumn fx:id="valorTabela_Pagar" editable="false" prefWidth="82.0" text="Valor" />
+                                          <TableColumn fx:id="valorAtrasoTabela_Pagar" editable="false" prefWidth="101.0" text="Valor do atraso" />
                                       </columns>
                                     </TableView>
                                  </children>

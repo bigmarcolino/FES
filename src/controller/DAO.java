@@ -12,7 +12,7 @@ import model.Cliente;
 import model.Motorista;
 
 @SuppressWarnings("unchecked")
-public class Controlador {
+public class DAO {
 	private static EntityManager em;
 	private static EntityManagerFactory emf;
 
@@ -26,7 +26,7 @@ public class Controlador {
 	}
 
 	public static void salvar(Object o) {
-		Controlador.init();
+		DAO.init();
 
 		try {
 			em.getTransaction().begin();
@@ -35,12 +35,12 @@ public class Controlador {
 		} catch (Exception e) {
 			return;
 		} finally {
-			Controlador.close();
+			DAO.close();
 		}
 	}
 
 	public static void alterar(Object o) {
-		Controlador.init();
+		DAO.init();
 
 		try {
 			em.getTransaction().begin();
@@ -49,12 +49,12 @@ public class Controlador {
 		} catch (Exception e) {
 			return;
 		} finally {
-			Controlador.close();
+			DAO.close();
 		}
 	}
 
 	public static void excluir(Object o) {
-		Controlador.init();
+		DAO.init();
 
 		try {
 			em.getTransaction().begin();
@@ -63,12 +63,12 @@ public class Controlador {
 		} catch (Exception e) {
 			return;
 		} finally {
-			Controlador.close();
+			DAO.close();
 		}
 	}
 
 	public static List<Motorista> listaMotoristas() {
-		Controlador.init();
+		DAO.init();
 		Query query = null;
 		List<Motorista> motoristas = null;
 
@@ -78,14 +78,14 @@ public class Controlador {
 		} catch (Exception e) {
 			return null;
 		} finally {
-			Controlador.close();
+			DAO.close();
 		}
 
 		return motoristas;
 	}
 
 	public static List<Carro> listaCarros() {
-		Controlador.init();
+		DAO.init();
 		Query query = null;
 		List<Carro> carros = null;
 
@@ -95,7 +95,7 @@ public class Controlador {
 		} catch (Exception e) {
 			return null;
 		} finally {
-			Controlador.close();
+			DAO.close();
 		}
 
 		return carros;
@@ -103,7 +103,7 @@ public class Controlador {
 
 	// consultas HQL
 	public static List<Cliente> listaClientes() {
-		Controlador.init();
+		DAO.init();
 		Query query = null;
 		List<Cliente> clientes = null;
 
@@ -113,7 +113,7 @@ public class Controlador {
 		} catch (Exception e) {
 			return null;
 		} finally {
-			Controlador.close();
+			DAO.close();
 		}
 
 		return clientes;

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,6 +21,7 @@ import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
@@ -37,16 +38,13 @@ import model.Locacao;
 import model.Reserva;
 import model.Venda;
 
-
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 
-
-import controller.Controlador;
+import controller.DAO;
 import controller.MainApp;
-
 
 public class MainAppController {
 	// atributos do acordeon Pagar ------------------------------------------------------------------------------------------------------
@@ -54,7 +52,19 @@ public class MainAppController {
     private TextField nomeCliente_Pagar;
 	
 	@FXML
-    private TableView tabela_Pagar;
+    private TableView<Carro> tabela_Pagar;
+	
+	@FXML
+    private TableColumn<Carro, String> carroTabela_Pagar;
+	
+    @FXML
+    private TableColumn<Carro, String> placaTabela_Pagar;
+    
+    @FXML
+    private TableColumn<Carro, String> valorTabela_Pagar;
+    
+    @FXML
+    private TableColumn<Carro, String> valorAtrasoTabela_Pagar;
 	
 	@FXML
     private RadioButton dinheiro_Pagar;
@@ -254,6 +264,21 @@ public class MainAppController {
         });
     }
 	
+	//apenas números num TextField
+	public void campoValor(final TextField textField) {
+        textField.lengthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if (newValue.intValue() > oldValue.intValue()) {
+                    String ch = textField.getText(oldValue.intValue(), oldValue.intValue()+1);
+                    if (!(ch.matches("[0-9.]"))) {
+                        textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+                    }
+                }
+            }
+        });
+    }
+	
 	//apenas letras num TextField
 	public void campoLetras(final TextField textField) {
         textField.lengthProperty().addListener(new ChangeListener<Number>() {
@@ -285,8 +310,8 @@ public class MainAppController {
     @FXML
     private void initialize() {
     	// variáveis globais dos acordeons----------------------------------------------------------------------------------------------------------------    	
-    	List<Cliente> clientes = Controlador.listaClientes();
-    	List<Carro> carros = Controlador.listaCarros();
+    	List<Cliente> clientes = DAO.listaClientes();
+    	List<Carro> carros = DAO.listaCarros();
     	
     	Collection<String> sugestoesClientes = new ArrayList<String>();
     	
@@ -301,30 +326,93 @@ public class MainAppController {
     	for (Carro carro : carros){
     		mapCarros.put(carro.getNome() + " " + "(" + carro.getPlaca() + ")", carro);
     	}
-    	
-    	/* excluir dps
-    	System.out.println("*******************************");
-    	for (Cliente cliente : clientes){
-    		System.out.println("Cliente: ");
-    		System.out.println(cliente.getIdCliente());
-    		System.out.println("Reservas");
-    		for (Reserva reserva : cliente.getReservas())
-    			System.out.println(reserva.getIdCarro());
-    		System.out.println("Locacoes");
-    		for (Locacao locacao : cliente.getLocacaos())
-    			System.out.println(locacao.getIdCarro());
-    		System.out.println("-------------");
-    		
-    	}    		
-    	*/
-    	
-    	LocalDate localDate = LocalDate.now();
     	// fim das variaveis globais ----------------------------------------------------------------------------------------------------------------------
     	
     	
     	// lógica do Pagar ---------------------------------------------------------------------------------------------------------------------
     	//autocomplete  
     	TextFields.bindAutoCompletion(nomeCliente_Pagar, sugestoesClientes);
+    	
+    	//tabela de carros
+    	nomeCliente_Pagar.focusedProperty().addListener(new ChangeListener<Boolean>()
+    	{
+		    @Override
+		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+		    {
+		        if (!newPropertyValue)
+		        {   		        	
+		        	if(mapClientes.get(nomeCliente_Pagar.getText()) != null){
+		        		ObservableList<Carro> carrosPendentes = FXCollections.observableArrayList();
+		        		
+		        		// os carros desse cliente que nao tem pagamento
+			        	Cliente cliente = mapClientes.get(nomeCliente_Pagar.getText());
+			        	
+			        	for (ClienteTemCarro ctc : cliente.getClienteTemCarros()){
+			        		// vendas do carro
+			        		if (ctc.getCarro().getVendas() != null){
+			        			for (Venda v : ctc.getCarro().getVendas()){
+			        				if(v.getPagamento() == null){
+			        					carrosPendentes.add(v.getCarro());
+			        				}
+			        			}
+			        		}
+
+			        		//locacoes do carro
+			        		if (ctc.getCarro().getCarroTemLocacaos() != null){
+			        			for (CarroTemLocacao ctl :   ctc.getCarro().getCarroTemLocacaos()){
+			        				if(ctl.getLocacao().getPagamentos() == null || ctl.getLocacao().getPagamentos().size() == 0){
+			        					carrosPendentes.add(ctl.getCarro());
+			        				}
+			        			}			        				
+			        		}
+
+			        		// reservas do carro			        		
+			        		if (ctc.getCarro().getCarroTemReservas() != null){
+			        			for (CarroTemReserva ctr : ctc.getCarro().getCarroTemReservas()){
+			        				if(ctr.getReserva().getPagamentos() == null || ctr.getReserva().getPagamentos().size() == 0){
+			        					carrosPendentes.add(ctr.getCarro());
+			        				}
+			        			}
+			        		}
+			        	}
+			        	
+			        	carroTabela_Pagar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
+			        	placaTabela_Pagar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlaca()));
+			        	valorTabela_Pagar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getValor()));
+			        	valorAtrasoTabela_Pagar.setCellValueFactory(cellData -> new SimpleStringProperty("0"));
+			        	
+			        	tabela_Pagar.setItems(carrosPendentes);
+		        	}
+		        }
+		    }
+    	});
+    	
+    	tabela_Pagar.getSelectionModel().selectedItemProperty().addListener(
+    		(observable, oldValue, newValue) -> {
+		        if (newValue != null) {
+		        	Double soma = Double.parseDouble(newValue.getValor());
+		        	
+		        	if(!valorRetorno_Pagar.getText().equals(null) && !valorRetorno_Pagar.getText().isEmpty()){
+	        			soma += Double.parseDouble(valorRetorno_Pagar.getText());
+	        		}
+	        		
+	        		if(!valorDanificacao_Pagar.getText().equals(null) && !valorDanificacao_Pagar.getText().isEmpty()){
+	        			soma += Double.parseDouble(valorDanificacao_Pagar.getText());
+	        		}
+	        		
+	        		if(!valorDesconto_Pagar.getText().equals(null) && !valorDesconto_Pagar.getText().isEmpty()){
+	        			if(soma - Double.parseDouble(valorDesconto_Pagar.getText()) < 0){
+		        			soma = Double.parseDouble("0");
+		        		}
+		        		else{
+		        			soma = soma - Double.parseDouble(valorDesconto_Pagar.getText());
+		        		}
+	        		}
+		        	
+		            totalPagar_Pagar.setText("R$ " + soma);
+		        }
+		    }
+		);
     	
     	//seta as formas de pagamento
     	ObservableList<String> dadosComboBoxFormaPagamento_Pagar = FXCollections.observableArrayList();
@@ -346,6 +434,10 @@ public class MainAppController {
     	}
     	
     	parcelamento_Pagar.setItems(dadosComboBoxParcelamento_Pagar);
+    	
+    	campoValor(valorDanificacao_Pagar);
+    	campoValor(valorRetorno_Pagar);
+    	campoValor(valorDesconto_Pagar);
     	
     	ToggleGroup group = new ToggleGroup();
         cartao_Pagar.setToggleGroup(group);
@@ -373,6 +465,111 @@ public class MainAppController {
         		}
             }
         });
+        
+        valorDanificacao_Pagar.focusedProperty().addListener(new ChangeListener<Boolean>()
+		{
+		    @Override
+		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+		    {
+		        if (!newPropertyValue)
+		        {   		        	
+	        		Double soma = 0.0;
+	        		
+	        		if(!(tabela_Pagar.getSelectionModel().getSelectedItem() == null)){
+	        			soma = Double.parseDouble(tabela_Pagar.getSelectionModel().getSelectedItem().getValor());
+	        		}	
+	        			
+			        if(!valorDanificacao_Pagar.getText().equals(null) && !valorDanificacao_Pagar.getText().isEmpty()){
+	        			soma += Double.parseDouble(valorDanificacao_Pagar.getText());
+	        		}
+	        		
+	        		if(!valorRetorno_Pagar.getText().equals(null) && !valorRetorno_Pagar.getText().isEmpty()){
+	        			soma += Double.parseDouble(valorRetorno_Pagar.getText());
+	        		}
+	        		
+	        		if(!valorDesconto_Pagar.getText().equals(null) && !valorDesconto_Pagar.getText().isEmpty()){
+	        			if(soma - Double.parseDouble(valorDesconto_Pagar.getText()) < 0){
+		        			soma = Double.parseDouble("0");
+		        		}
+		        		else{
+		        			soma = soma - Double.parseDouble(valorDesconto_Pagar.getText());
+		        		}
+	        		}
+
+	        		totalPagar_Pagar.setText("R$ " + soma.toString());
+		        }
+		    }
+		});
+        
+        valorRetorno_Pagar.focusedProperty().addListener(new ChangeListener<Boolean>()
+		{
+		    @Override
+		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+		    {
+		        if (!newPropertyValue)
+		        {   		        	
+		        	Double soma = 0.0;
+	        		
+	        		if(!(tabela_Pagar.getSelectionModel().getSelectedItem() == null)){
+	        			soma = Double.parseDouble(tabela_Pagar.getSelectionModel().getSelectedItem().getValor());
+	        		}	
+	        			
+			        if(!valorDanificacao_Pagar.getText().equals(null) && !valorDanificacao_Pagar.getText().isEmpty()){
+	        			soma += Double.parseDouble(valorDanificacao_Pagar.getText());
+	        		}
+	        		
+	        		if(!valorRetorno_Pagar.getText().equals(null) && !valorRetorno_Pagar.getText().isEmpty()){
+	        			soma += Double.parseDouble(valorRetorno_Pagar.getText());
+	        		}
+	        		
+	        		if(!valorDesconto_Pagar.getText().equals(null) && !valorDesconto_Pagar.getText().isEmpty()){
+	        			if(soma - Double.parseDouble(valorDesconto_Pagar.getText()) < 0){
+		        			soma = Double.parseDouble("0");
+		        		}
+		        		else{
+		        			soma = soma - Double.parseDouble(valorDesconto_Pagar.getText());
+		        		}
+	        		}
+
+	        		totalPagar_Pagar.setText("R$ " + soma.toString());
+		        }
+		    }
+		});
+        
+        valorDesconto_Pagar.focusedProperty().addListener(new ChangeListener<Boolean>()
+		{
+		    @Override
+		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+		    {
+		        if (!newPropertyValue)
+		        {   		        	
+		        	Double soma = 0.0;
+	        		
+	        		if(!(tabela_Pagar.getSelectionModel().getSelectedItem() == null)){
+	        			soma = Double.parseDouble(tabela_Pagar.getSelectionModel().getSelectedItem().getValor());
+	        		}	
+	        			
+			        if(!valorDanificacao_Pagar.getText().equals(null) && !valorDanificacao_Pagar.getText().isEmpty()){
+	        			soma += Double.parseDouble(valorDanificacao_Pagar.getText());
+	        		}
+	        		
+	        		if(!valorRetorno_Pagar.getText().equals(null) && !valorRetorno_Pagar.getText().isEmpty()){
+	        			soma += Double.parseDouble(valorRetorno_Pagar.getText());
+	        		}
+	        		
+	        		if(!valorDesconto_Pagar.getText().equals(null) && !valorDesconto_Pagar.getText().isEmpty()){
+	        			if(soma - Double.parseDouble(valorDesconto_Pagar.getText()) < 0){
+		        			soma = Double.parseDouble("0");
+		        		}
+		        		else{
+		        			soma = soma - Double.parseDouble(valorDesconto_Pagar.getText());
+		        		}
+	        		}
+
+	        		totalPagar_Pagar.setText("R$ " + soma.toString());
+		        }
+		    }
+		});
 
     	//gera o modal do pagar
     	pagar_Pagar.setOnAction((event) -> {
@@ -383,16 +580,26 @@ public class MainAppController {
     		        .showConfirm();
 
     		if (response == Dialog.ACTION_YES) {
-    			if(/*verificar se selecionou um carro*/ !nomeCliente_Pagar.getText().equals("") &&
+    			if(!(tabela_Pagar.getSelectionModel().getSelectedItem() == null) && !nomeCliente_Pagar.getText().equals("") &&
     			  ( ( group.getSelectedToggle().getUserData().toString().equals("cartao") && formaDePagamento_Pagar.getSelectionModel().getSelectedIndex() != -1 && creditoDebito_Pagar.getSelectionModel().getSelectedIndex() != -1 &&
     			     parcelamento_Pagar.getSelectionModel().getSelectedIndex() != -1  ) || group.getSelectedToggle().getUserData().toString().equals("dinheiro") ) )
     			{
     				//substituir pela lógica de inserção no banco
     				System.out.println("Foi");
     				
+    				// criar objeto pagamento
+    				// controlador.salvar(pagemento)
+    				
+    				// se for venda fazer venda.setPagamento(pagamento)
+    				// se for locacao fazer locacao.setIdPagamento(pagamento.getIdPagamento())
+    				// se for reserva fazer reserva.setIdPagamento(reserva.getIdPagamento())
+    				
+    				
+    				
     				initialize();
     				
     				nomeCliente_Pagar.setText("");
+        			tabela_Pagar.setItems(null);
         			valorDanificacao_Pagar.setText("");
         			valorRetorno_Pagar.setText("");
         			valorDesconto_Pagar.setText("");
@@ -400,7 +607,7 @@ public class MainAppController {
         			creditoDebito_Pagar.getSelectionModel().clearSelection();
             		parcelamento_Pagar.getSelectionModel().clearSelection();
             		cartao_Pagar.setSelected(true);
-            		totalPagar_Pagar.setText("R$ 0.00");
+            		totalPagar_Pagar.setText("R$ 0.0");
             		aviso_Pagar.setText("");
     				
     				Dialogs.create()
@@ -426,6 +633,7 @@ public class MainAppController {
 
     		if (response == Dialog.ACTION_YES) {
     			nomeCliente_Pagar.setText("");
+    			tabela_Pagar.setItems(null);
     			valorDanificacao_Pagar.setText("");
     			valorRetorno_Pagar.setText("");
     			valorDesconto_Pagar.setText("");
@@ -433,7 +641,7 @@ public class MainAppController {
     			creditoDebito_Pagar.getSelectionModel().clearSelection();
         		parcelamento_Pagar.getSelectionModel().clearSelection();
         		cartao_Pagar.setSelected(true);
-        		totalPagar_Pagar.setText("R$ 0.00");
+        		totalPagar_Pagar.setText("R$ 0.0");
         		aviso_Pagar.setText("");
     		}
     	});
@@ -501,7 +709,7 @@ public class MainAppController {
     				novoCliente.setNome(nomeCliente_CadastrarCliente.getText());
     				novoCliente.setIdade(idade_CadastrarCliente.getText());
     				novoCliente.setCpf(cpf_CadastrarCliente.getText());
-    				Controlador.salvar(novoCliente);
+    				DAO.salvar(novoCliente);
     				
     				initialize();
     				
@@ -648,7 +856,7 @@ public class MainAppController {
                         public void updateItem(LocalDate item, boolean empty) {
                             super.updateItem(item, empty);
 
-                            if (item.isBefore(localDate.minusDays(1).plusDays(1))){
+                            if (item.isBefore(LocalDate.now().minusDays(1).plusDays(1))){
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }   
@@ -708,7 +916,7 @@ public class MainAppController {
     				Cliente cliente = mapClientes.get(nomeCliente_ReservarAntecipado.getText());
     				Carro carro = mapCarros.get(carro_ReservarAntecipado.getSelectionModel().getSelectedItem());
     				carro.setDisponibilidade(false);
-    				Controlador.alterar(carro);
+    				DAO.alterar(carro);
     				
     				Date dataInicio = Date.from(dataInicio_ReservarAntecipado.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
     				Date dataFim = Date.from(dataFim_ReservarAntecipado.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -716,17 +924,21 @@ public class MainAppController {
     				Reserva reserva = new Reserva();
     				reserva.setCliente(cliente);
     				reserva.setIdCarro(carro.getIdCarro());
-    				reserva.setDataReserva(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    				reserva.setDataReserva(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
     				reserva.setDataInicio(dataInicio);
     				reserva.setDataFim(dataFim);
     				
-    				Controlador.salvar(reserva);
+    				DAO.salvar(reserva);
     				
     				CarroTemReserva ctr = new CarroTemReserva();
     				ctr.setCarro(carro);
-    				ctr.setReserva(reserva);
+    				ctr.setReserva(reserva);    				
+    				DAO.salvar(ctr);
     				
-    				Controlador.salvar(ctr);
+    				ClienteTemCarro ctc = new ClienteTemCarro();
+    				ctc.setCarro(carro);
+    				ctc.setCliente(cliente);
+    				DAO.salvar(ctc);
     				
     				initialize();
     				
@@ -872,7 +1084,7 @@ public class MainAppController {
         });
     	
     	//preenche a data inicial com a data atual
-    	dataInicio_AlocarImediato.setValue(localDate);
+    	dataInicio_AlocarImediato.setValue(LocalDate.now());
     	
     	//permite escolher datas a partir de amanhã
     	final Callback<DatePicker, DateCell> dayCellFactory = 
@@ -884,7 +1096,7 @@ public class MainAppController {
                         public void updateItem(LocalDate item, boolean empty) {
                             super.updateItem(item, empty);
                            
-                            if (item.isBefore(localDate.plusDays(1))){
+                            if (item.isBefore(LocalDate.now().plusDays(1))){
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }   
@@ -921,7 +1133,7 @@ public class MainAppController {
     				Cliente cliente = mapClientes.get(nomeCliente_AlocarImediato.getText());
     				Carro carro = mapCarros.get(carro_AlocarImediato.getSelectionModel().getSelectedItem());
     				carro.setDisponibilidade(false);
-    				Controlador.alterar(carro);
+    				DAO.alterar(carro);
     				
     				Date dataInicio = Date.from(dataInicio_AlocarImediato.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
     				Date dataFim = Date.from(dataFim_AlocarImediato.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -932,12 +1144,18 @@ public class MainAppController {
     				locacao.setDataInicio(dataInicio);
     				locacao.setDataFim(dataFim);
     				
-    				Controlador.salvar(locacao);
+    				DAO.salvar(locacao);
     				
     				CarroTemLocacao ctl = new CarroTemLocacao();
     				ctl.setCarro(carro);
     				ctl.setLocacao(locacao);
-    				Controlador.salvar(ctl);
+    				DAO.salvar(ctl);
+    				
+    				ClienteTemCarro ctc = new ClienteTemCarro();
+    				ctc.setCarro(carro);
+    				ctc.setCliente(cliente);
+    				DAO.salvar(ctc);
+    			
     				
     				initialize();
     				
@@ -1064,16 +1282,16 @@ public class MainAppController {
     				ClienteTemCarro ctc = new ClienteTemCarro();
     				Carro carro = mapCarros.get(carro_Vender.getValue());
     				carro.setDisponibilidade(false);
-    				Controlador.alterar(carro);
+    				DAO.alterar(carro);
     				
     				Cliente cliente = mapClientes.get(nomeCliente_Vender.getText());
     				ctc.setCarro(carro);
     				ctc.setCliente(cliente);
-    				Controlador.salvar(ctc);
+    				DAO.salvar(ctc);
     				
     				Venda venda = new Venda();    				
     				venda.setCarro(carro);
-    				Controlador.salvar(venda);
+    				DAO.salvar(venda);
     				
     				initialize();
     				
