@@ -170,7 +170,25 @@
                <content>
                   <Accordion>
                     <panes>
-                      <TitledPane text="Agendar manutenção" />
+                      <TitledPane text="Agendar manutenção">
+                           <content>
+                              <AnchorPane>
+                                 <children>
+                                    <Separator layoutX="289.0" layoutY="25.0" orientation="VERTICAL" prefHeight="238.0" prefWidth="6.0" />
+                                    <Label layoutX="23.0" layoutY="96.0" text="Carro" />
+                                    <ComboBox fx:id="carro_AgendarManutencao" layoutX="23.0" layoutY="114.0" prefHeight="25.0" prefWidth="247.0" />
+                                    <Button fx:id="verificar_AgendarManutencao" layoutX="71.0" layoutY="250.0" mnemonicParsing="false" text="Verificar" />
+                                    <Button fx:id="limpar_AgendarManutencao" layoutX="161.0" layoutY="250.0" mnemonicParsing="false" text="Limpar" />
+                                    <Label fx:id="aviso_AgendarManutencao" layoutX="321.0" layoutY="294.0" textFill="#f80000">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fx:id="img_carro_AgendarManutencao" fitHeight="221.0" fitWidth="445.0" layoutX="330.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
+                                    <CheckBox fx:id="vistoria_AgendarManutencao" layoutX="23.0" layoutY="43.0" mnemonicParsing="false" text="Vistoria OK" />
+                                 </children>
+                              </AnchorPane>
+                           </content></TitledPane>
                       <TitledPane text="Vender">
                            <content>
                               <AnchorPane>

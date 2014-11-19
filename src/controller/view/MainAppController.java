@@ -16,6 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -234,6 +235,27 @@ public class MainAppController {
 	@FXML
     private Label aviso_Vender;
 	// fim dos atributos do acordeon Vender -------------------------------------------------------------------------------------------------------------
+	
+	
+	// atributos do acordeon Agendar Manutenção --------------------------------------------------------------------------------------------------------------------
+	@FXML
+    private CheckBox vistoria_AgendarManutencao;
+	
+	@FXML
+    private ComboBox<String> carro_AgendarManutencao;
+	
+	@FXML
+    private ImageView img_carro_AgendarManutencao;
+	
+	@FXML
+    private Button verificar_AgendarManutencao;
+	
+	@FXML
+    private Button limpar_AgendarManutencao;
+	
+	@FXML
+    private Label aviso_AgendarManutencao;
+	// fim dos atributos do acordeon Agendar Manutenção -------------------------------------------------------------------------------------------------------------
 	
 	private MainApp mainApp;
 	
@@ -584,8 +606,8 @@ public class MainAppController {
     			  ( ( group.getSelectedToggle().getUserData().toString().equals("cartao") && formaDePagamento_Pagar.getSelectionModel().getSelectedIndex() != -1 && creditoDebito_Pagar.getSelectionModel().getSelectedIndex() != -1 &&
     			     parcelamento_Pagar.getSelectionModel().getSelectedIndex() != -1  ) || group.getSelectedToggle().getUserData().toString().equals("dinheiro") ) )
     			{
-    				//substituir pela lógica de inserção no banco
-    				System.out.println("Foi");
+    				//PAGAR
+    				//FALTA VERIFICAR SE CARROS TÊM PAGAMENTO
     				
     				// criar objeto pagamento
     				// controlador.salvar(pagemento)
@@ -593,8 +615,6 @@ public class MainAppController {
     				// se for venda fazer venda.setPagamento(pagamento)
     				// se for locacao fazer locacao.setIdPagamento(pagamento.getIdPagamento())
     				// se for reserva fazer reserva.setIdPagamento(reserva.getIdPagamento())
-    				
-    				
     				
     				initialize();
     				
@@ -1333,6 +1353,100 @@ public class MainAppController {
     		}
     	});
     	// fim lógica do Vender -----------------------------------------------------------------------------------------------------------------------------
+    	
+    	
+    	// lógica do Agendar Manutenção ------------------------------------------------------------------------------------------------------------------------------
+    	ObservableList<String> dadosComboBoxCarro_AgendarManutencao = FXCollections.observableArrayList();
+    	
+    	for (Carro carro : carros){
+			if(!carro.getDisponibilidade() && carro.getNecessitaDeConserto()){
+				dadosComboBoxCarro_AgendarManutencao.add(carro.getNome() + " " + "(" + carro.getPlaca() + ")");
+			}
+		}
+    	
+    	carro_AgendarManutencao.setItems(dadosComboBoxCarro_AgendarManutencao);
+
+    	carro_AgendarManutencao.valueProperty().addListener(new ChangeListener<String>() {
+	        @Override
+	        public void changed(ObservableValue ov, String t, String t1) {
+	        	if(carro_AgendarManutencao.getValue() != null){
+	        		String nomeImg = mapCarros.get(carro_AgendarManutencao.getValue()).getModelo().toLowerCase().replaceAll("\\p{Z}","") + ".jpg";
+	    			img_carro_AgendarManutencao.setImage(new Image("img/carros/" + nomeImg));
+	        	}	        	
+	        }    
+		});
+    	
+    	//gera o modal do verificar
+    	verificar_AgendarManutencao.setOnAction((event) -> {
+    		Action response = Dialogs.create()
+    		        .owner(null)
+    		        .title("Aviso!")
+    		        .message("Deseja enviar os dados?")
+    		        .showConfirm();
+
+    		if (response == Dialog.ACTION_YES) {
+    			if(carro_AgendarManutencao.getSelectionModel().getSelectedIndex() != -1)
+    			{
+    				if(vistoria_AgendarManutencao.isSelected()){
+    					
+    					Carro carro = mapCarros.get(carro_AgendarManutencao.getSelectionModel().getSelectedItem());
+        				carro.setDisponibilidade(true);
+        				DAO.alterar(carro);
+    					
+    					initialize();
+    					
+    					vistoria_AgendarManutencao.setSelected(false);
+            			carro_AgendarManutencao.getSelectionModel().clearSelection();
+                		img_carro_AgendarManutencao.setImage(null);
+                		aviso_AgendarManutencao.setText("");
+                		
+                		Dialogs.create()
+    		        	.owner(null)
+    		        	.title("Aviso!")
+    		        	.masthead(null)
+    		        	.message("Dados enviados com sucesso!")
+    		        	.showInformation();
+    				}
+    				else{
+    					////////////////////AGENDAR MANUTENÇÃO
+    					
+    					initialize();
+    					
+    					vistoria_AgendarManutencao.setSelected(false);
+            			carro_AgendarManutencao.getSelectionModel().clearSelection();
+                		img_carro_AgendarManutencao.setImage(null);
+                		aviso_AgendarManutencao.setText("");
+                		
+                		Dialogs.create()
+    		        	.owner(null)
+    		        	.title("Aviso!")
+    		        	.masthead(null)
+    		        	.message("Dados enviados com sucesso!")
+    		        	.showInformation();
+    				}
+    			}
+    			else{
+    				aviso_AgendarManutencao.setText("*Selecione um carro");
+    			}
+    		}
+    	});
+    	
+    	//gera o modal do limpar dados
+    	limpar_AgendarManutencao.setOnAction((event) -> {
+    		Action response = Dialogs.create()
+    			      .owner(null)
+    			      .title("Aviso!")
+    			      .message( "Deseja limpar os campos?")
+    			      .showConfirm();
+
+    		if (response == Dialog.ACTION_YES) {
+    			vistoria_AgendarManutencao.setSelected(false);
+    			carro_AgendarManutencao.getSelectionModel().clearSelection();
+        		img_carro_AgendarManutencao.setImage(null);
+        		aviso_AgendarManutencao.setText("");
+    		}
+    	});
+    	// fim lógica do Agendar Manutenção ------------------------------------------------------------------------------------------------------------
     }
     
     public void setMainApp(MainApp mainApp) {
