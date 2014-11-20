@@ -276,4 +276,22 @@ public class Carro implements Serializable {
 		else
 			return this.idCarro.hashCode();
 	}
+	
+	public boolean ehCompletamenteIgual(Carro carro){
+		boolean resposta = true;
+		resposta &= this.idCarro == null ? carro.getIdCarro() == null : this.idCarro.equals(carro.getIdCarro());
+		resposta &= ano == null ? carro.getAno() == null : this.getAno().equals(carro.getAno());
+		resposta &= disponibilidade == carro.getDisponibilidade();
+		resposta &= fabricante == null ? carro.getAno() == null : this.getFabricante().equals(carro.getFabricante());
+		resposta &= filial == null ? carro.getFilial() == null : this.getFilial().equals(carro.getFilial());
+		resposta &= valor == null ? carro.getValor() == null : this.getValor().equals(carro.getValor());
+		resposta &= placa == null ? carro.getPlaca() == null : this.getPlaca().equals(carro.getPlaca());
+		resposta &= modelo == null ? carro.getModelo() == null : this.getModelo().equals(carro.getModelo());
+		resposta &= necessitaDeConserto == carro.getNecessitaDeConserto();
+		resposta &= quilometragem == null ? carro.getQuilometragem() == null : this.getQuilometragem().equals(carro.getQuilometragem());
+		resposta &= ultimaRevisao == null ? carro.getUltimaRevisao() == null : this.getUltimaRevisao().equals(carro.getUltimaRevisao());
+		// se vc quisesse ser mais meticuloso, vc poderia comparar as listas manutencaos, vendas, etc e 
+		// ver se elas tambem sao iguais, mas eh mto trabalho pra esse trabalhinho tosco...
+		return resposta;
+	}
 }
