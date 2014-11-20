@@ -52,7 +52,8 @@ public class testDAO {
 		carros = DAO.listaCarros();
 		carro = carros.get(0);
 		
-		assertFalse(carro.equals(carroAux));
+		//ATENCAO COM A MUDANCA 
+		assertFalse(carro.ehCompletamenteIgual(carroAux));
 	}
 
 	public void testExcluir() {
@@ -71,7 +72,10 @@ public class testDAO {
 		carro.setValor("35000");
 		
 		DAO.salvar(carro);
+		String id = carro.getIdCarro();
 		DAO.excluir(carro);
+		carro.setIdCarro(id);
+		//NAO TESTEI, ver se resolve!!!
 		
 		List<Carro> carros = DAO.listaCarros();
 		
