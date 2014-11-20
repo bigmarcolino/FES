@@ -100,6 +100,23 @@ public class DAO {
 
 		return carros;
 	}
+	
+	public static Carro getCarroById(String idCarro) {
+		DAO.init();
+		Query query = null;
+		Carro carro = null;
+
+		try {
+			query = em.createQuery("FROM Carro WHERE idCarro = " + idCarro);
+			carro = (Carro) query.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		} finally {
+			DAO.close();
+		}
+
+		return carro;
+	}
 
 	// consultas HQL
 	public static List<Cliente> listaClientes() {
