@@ -256,4 +256,24 @@ public class Carro implements Serializable {
 	public void setVendas(List<Venda> vendas) {
 		this.vendas = vendas;
 	}
+	
+	public boolean equals (Object obj){
+		if (!(obj instanceof Carro))
+			return false;
+		Carro carro = (Carro) obj;
+		if (carro.getIdCarro() == null || this.idCarro == null)
+			return false; 
+		// ATENCAO: esse metodo soh deve ser chamado depois de salvar o objeto no banco,
+		// dessa forma os dois objetos terao id, a verificação acima eh soh pra nao dah erro de nullpointer,
+		// caso vc chame o equals para o objeto sem id
+		return this.idCarro.equals(carro.getIdCarro());
+	}
+	
+	//se vc usar HashMap ou LinkedHashSet no seu codigo, o metodo abaixo tambem deve ser implementado
+	public int hashCode() {
+		if (this.idCarro == null)
+			return super.hashCode(); //de novo, soh pra nao dah nullpointer, mas eh a msma explicacao do problema acima
+		else
+			return this.idCarro.hashCode();
+	}
 }
