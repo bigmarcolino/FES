@@ -66,6 +66,21 @@ public class DAO {
 			DAO.close();
 		}
 	}
+	
+	public static void remover(Class<?> classe, String id){
+		DAO.init();
+
+		try {
+			em.getTransaction().begin();
+			Object object = em.find(classe, id);
+		    em.remove(object);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			return;
+		} finally {
+			DAO.close();
+		}
+	}
 
 	public static List<Motorista> listaMotoristas() {
 		DAO.init();

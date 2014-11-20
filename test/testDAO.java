@@ -75,7 +75,7 @@ public class testDAO {
 		
 		DAO.salvar(carro);
 		String id = carro.getIdCarro();
-		DAO.excluir(carro);
+		DAO.remover(Carro.class, carro.getIdCarro());
 		carro.setIdCarro(id);
 		//NAO TESTEI, ver se resolve!!!
 		
