@@ -14,8 +14,10 @@ public class testDAO {
 
 	@Test
 	public void testSalvar() {
-		Carro carro = new Carro();
-		
+		//criei um carro
+		Carro carro = new Carro(); 
+
+		//setei os campos do carro criado
 		carro.setGrupo("A");
 		carro.setModelo("Picanto");
 		carro.setFabricante("Kia");
@@ -28,14 +30,16 @@ public class testDAO {
 		carro.setPlaca("GOT1234");
 		carro.setValor("25000");
 		
+		//salvei o carro no banco
 		DAO.salvar(carro);
 		
+		//carreguei a lista de todos os carros
 		List<Carro> carros = DAO.listaCarros();
 	
+		//verifico se nessa lista contém o carro que criei e salvei
 		assertTrue(carros.contains(carro));
 	}
 
-	@Test
 	public void testAlterar() {
 		List<Carro> carros = DAO.listaCarros();
 		
@@ -51,7 +55,6 @@ public class testDAO {
 		assertFalse(carro.equals(carroAux));
 	}
 
-	@Test
 	public void testExcluir() {
 		Carro carro = new Carro();
 		
