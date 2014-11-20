@@ -44,16 +44,18 @@ public class testDAO {
 		List<Carro> carros = DAO.listaCarros();
 		
 		Carro carro = carros.get(0);		
-		Carro carroAux = carro;
+		Carro carroCopia = DAO.getCarroById(carro.getIdCarro());
 		
 		carro.setAno("111");
 		DAO.alterar(carro);
 		
 		carros = DAO.listaCarros();
-		carro = carros.get(0);
+		carro = null;
+		for (Carro c : carros)
+			if (c.equals(carroCopia)) //olha soh o ID
+				carro = c;
 		
-		//ATENCAO COM A MUDANCA 
-		assertFalse(carro.ehCompletamenteIgual(carroAux));
+		assertFalse(carro.ehCompletamenteIgual(carroCopia));
 	}
 
 	public void testExcluir() {
