@@ -38,7 +38,24 @@ public class Pagamento implements Serializable {
 
 	@Column(name="tarifa_de_retorno")
 	private Double tarifaDeRetorno;
+	
+	@Lob
+	@Column(name="dinheiro_cartao")
+	private String dinheiroCartao;
 
+	@Lob
+	@Column(name="credito_debito")
+	private String creditoDebito;
+	
+	@Lob
+	private Integer parcelamento;
+	
+	@Column(name="tarifa_desconto")
+	private Double tarifaDesconto;
+	
+	@Column(name="valor_total")
+	private Double valorTotal;
+	
 	//bi-directional many-to-one association to Locacao
 	@ManyToOne
 	@JoinColumn(name="id_locacao")
@@ -125,6 +142,46 @@ public class Pagamento implements Serializable {
 
 	public void setVendas(List<Venda> vendas) {
 		this.vendas = vendas;
+	}
+
+	public String getDinheiroCartao() {
+		return dinheiroCartao;
+	}
+
+	public void setDinheiroCartao(String dinheiroCartao) {
+		this.dinheiroCartao = dinheiroCartao;
+	}
+
+	public String getCreditoDebito() {
+		return creditoDebito;
+	}
+
+	public void setCreditoDebito(String creditoDebito) {
+		this.creditoDebito = creditoDebito;
+	}
+
+	public Integer getParcelamento() {
+		return parcelamento;
+	}
+
+	public void setParcelamento(Integer parcelamento) {
+		this.parcelamento = parcelamento;
+	}
+
+	public Double getTarifaDesconto() {
+		return tarifaDesconto;
+	}
+
+	public void setTarifaDesconto(Double tarifaDesconto) {
+		this.tarifaDesconto = tarifaDesconto;
+	}
+
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
 }

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,13 +37,17 @@ import model.CarroTemReserva;
 import model.Cliente;
 import model.ClienteTemCarro;
 import model.Locacao;
+import model.Manutencao;
+import model.Pagamento;
 import model.Reserva;
 import model.Venda;
+
 
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
+
 
 import controller.DAO;
 import controller.MainApp;
@@ -374,6 +379,7 @@ public class MainAppController {
 			        		if (ctc.getCarro().getVendas() != null){
 			        			for (Venda v : ctc.getCarro().getVendas()){
 			        				if(v.getPagamento() == null){
+			        					v.getCarro().setTipoDePendencia("V");
 			        					carrosPendentes.add(v.getCarro());
 			        				}
 			        			}
@@ -383,6 +389,7 @@ public class MainAppController {
 			        		if (ctc.getCarro().getCarroTemLocacaos() != null){
 			        			for (CarroTemLocacao ctl :   ctc.getCarro().getCarroTemLocacaos()){
 			        				if(ctl.getLocacao().getPagamentos() == null || ctl.getLocacao().getPagamentos().size() == 0){
+			        					ctl.getCarro().setTipoDePendencia("L");
 			        					carrosPendentes.add(ctl.getCarro());
 			        				}
 			        			}			        				
@@ -392,6 +399,7 @@ public class MainAppController {
 			        		if (ctc.getCarro().getCarroTemReservas() != null){
 			        			for (CarroTemReserva ctr : ctc.getCarro().getCarroTemReservas()){
 			        				if(ctr.getReserva().getPagamentos() == null || ctr.getReserva().getPagamentos().size() == 0){
+			        					ctr.getCarro().setTipoDePendencia("R");
 			        					carrosPendentes.add(ctr.getCarro());
 			        				}
 			        			}
@@ -464,7 +472,7 @@ public class MainAppController {
     	ToggleGroup group = new ToggleGroup();
         cartao_Pagar.setToggleGroup(group);
         cartao_Pagar.setSelected(true);
-        cartao_Pagar.setUserData("cartão");
+        cartao_Pagar.setUserData("cartao");
         dinheiro_Pagar.setToggleGroup(group);
         dinheiro_Pagar.setUserData("dinheiro");
         
@@ -602,19 +610,70 @@ public class MainAppController {
     		        .showConfirm();
 
     		if (response == Dialog.ACTION_YES) {
-    			if(!(tabela_Pagar.getSelectionModel().getSelectedItem() == null) && !nomeCliente_Pagar.getText().equals("") &&
-    			  ( ( group.getSelectedToggle().getUserData().toString().equals("cartao") && formaDePagamento_Pagar.getSelectionModel().getSelectedIndex() != -1 && creditoDebito_Pagar.getSelectionModel().getSelectedIndex() != -1 &&
-    			     parcelamento_Pagar.getSelectionModel().getSelectedIndex() != -1  ) || group.getSelectedToggle().getUserData().toString().equals("dinheiro") ) )
-    			{
-    				//PAGAR
-    				//FALTA VERIFICAR SE CARROS TÊM PAGAMENTO
+    			boolean cond1 = group.getSelectedToggle().getUserData().toString().equals("cartao") && formaDePagamento_Pagar.getSelectionModel().getSelectedIndex() != -1 && creditoDebito_Pagar.getSelectionModel().getSelectedIndex() != -1 &&
+       			     parcelamento_Pagar.getSelectionModel().getSelectedIndex() != -1 ;
+    			
+    			if(tabela_Pagar.getSelectionModel().getSelectedItem() != null && !nomeCliente_Pagar.getText().equals("") &&
+    			  ( cond1 ||  group.getSelectedToggle().getUserData().toString().equals("dinheiro")  ))
+    			{    				
+    				Carro carro = tabela_Pagar.getSelectionModel().getSelectedItem();
     				
-    				// criar objeto pagamento
-    				// controlador.salvar(pagemento)
+    				Pagamento pagamento = new Pagamento();
     				
-    				// se for venda fazer venda.setPagamento(pagamento)
-    				// se for locacao fazer locacao.setIdPagamento(pagamento.getIdPagamento())
-    				// se for reserva fazer reserva.setIdPagamento(reserva.getIdPagamento())
+    				pagamento.setData(new Date());
+    				pagamento.setDinheiroCartao(group.getSelectedToggle().getUserData().toString());
+    				
+    				if(!formaDePagamento_Pagar.isDisabled()){
+    					pagamento.setFormaDePagamento(formaDePagamento_Pagar.getSelectionModel().getSelectedItem());
+    				}
+    				
+    				if(!creditoDebito_Pagar.isDisabled()){
+    					pagamento.setCreditoDebito(creditoDebito_Pagar.getSelectionModel().getSelectedItem());
+    				}
+    				
+    				if(!parcelamento_Pagar.isDisabled()){
+    					pagamento.setParcelamento(parcelamento_Pagar.getSelectionModel().getSelectedItem()); 
+    				}
+				
+    				if(!valorDesconto_Pagar.getText().isEmpty() && valorDesconto_Pagar.getText() != null){
+    					pagamento.setTarifaDesconto(Double.parseDouble(valorDesconto_Pagar.getText()));
+    				}
+    				
+    				if(!valorDanificacao_Pagar.getText().isEmpty() && valorDanificacao_Pagar.getText() != null){
+    					pagamento.setTarifaDeDanificacao(Double.parseDouble(valorDanificacao_Pagar.getText()));
+    				}
+    				
+    				if(!valorRetorno_Pagar.getText().isEmpty() && valorRetorno_Pagar.getText() != null){
+    					pagamento.setTarifaDeRetorno(Double.parseDouble(valorRetorno_Pagar.getText()));
+    				}
+    				
+    				pagamento.setValorTotal(Double.parseDouble(totalPagar_Pagar.getText().split(" ")[1]));
+
+    				if (carro.getTipoDePendencia().equals("R")){
+    					Reserva reserva = null;
+    					for (CarroTemReserva ctr : carro.getCarroTemReservas())
+    						if (ctr.getCarro().equals(carro) && ctr.getReserva().getIdPagamento() == null)
+    							reserva = ctr.getReserva();
+    					pagamento.setReserva(reserva);
+    				} else if (carro.getTipoDePendencia().equals("L")){
+       					Locacao locacao = null;
+    					for (CarroTemLocacao ctl : carro.getCarroTemLocacaos())
+    						if (ctl.getCarro().equals(carro) && ctl.getLocacao().getIdPagamento() == null)
+    							locacao = ctl.getLocacao();
+    					pagamento.setLocacao(locacao);
+    				} else if (carro.getTipoDePendencia().equals("V")){
+       					Venda venda = null;
+       					if (carro.getVendas() != null){
+    					for (Venda v : carro.getVendas())
+    						if (v.getCarro().equals(carro) && v.getPagamento() == null)
+    							venda = v;
+    					List<Venda> vendas = new ArrayList<Venda>();
+    					vendas.add(venda);
+    					pagamento.setVendas(vendas); // se der erro, classe Pagamento deve ter apenas uma venda: idVenda
+       					}
+    				}
+    				
+    				DAO.salvar(pagamento);
     				
     				initialize();
     				
@@ -1408,7 +1467,13 @@ public class MainAppController {
     		        	.showInformation();
     				}
     				else{
-    					////////////////////AGENDAR MANUTENÇÃO
+    					Manutencao manutencao = new Manutencao();
+    					Carro carro = mapCarros.get(carro_AgendarManutencao.getSelectionModel().getSelectedItem());
+    					
+    					manutencao.setData(new Date());
+    					manutencao.setCarro(carro);
+    					
+    					DAO.salvar(manutencao);
     					
     					initialize();
     					

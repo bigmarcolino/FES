@@ -72,6 +72,9 @@ public class Carro implements Serializable {
 	@OneToMany(mappedBy="carro", fetch=FetchType.EAGER)
 	private List<Venda> vendas;
 	
+	@Transient
+	private String tipoDePendencia;
+	
 	public Carro() {
 	}
 
@@ -257,6 +260,14 @@ public class Carro implements Serializable {
 		this.vendas = vendas;
 	}
 	
+	public String getTipoDePendencia() {
+		return tipoDePendencia;
+	}
+
+	public void setTipoDePendencia(String tipoDePendencia) {
+		this.tipoDePendencia = tipoDePendencia;
+	}
+
 	public boolean equals (Object obj){
 		if (!(obj instanceof Carro))
 			return false;
