@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -42,16 +41,15 @@ import model.Pagamento;
 import model.Reserva;
 import model.Venda;
 
-
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 
-
 import controller.DAO;
 import controller.MainApp;
 
+@SuppressWarnings("deprecation")
 public class MainAppController {
 	// atributos do acordeon Pagar ------------------------------------------------------------------------------------------------------
 	@FXML
@@ -970,7 +968,7 @@ public class MainAppController {
 	    
 	    carro_ReservarAntecipado.valueProperty().addListener(new ChangeListener<String>() {
 	        @Override
-	        public void changed(ObservableValue ov, String t, String t1) {
+	        public void changed(ObservableValue<? extends String> ov, String t, String t1) {
 	        	if(carro_ReservarAntecipado.getValue() != null){
 	        		String nomeImg = mapCarros.get(carro_ReservarAntecipado.getValue()).getModelo().toLowerCase().replaceAll("\\p{Z}","") + ".jpg";
 	    			img_carro_ReservarAntecipado.setImage(new Image("img/carros/" + nomeImg));
@@ -1188,7 +1186,7 @@ public class MainAppController {
 	    
 	    carro_AlocarImediato.valueProperty().addListener(new ChangeListener<String>() {
 	        @Override
-	        public void changed(ObservableValue ov, String t, String t1) {
+	        public void changed(ObservableValue<? extends String> ov, String t, String t1) {
 	        	if(carro_AlocarImediato.getValue() != null){
 	        		String nomeImg = mapCarros.get(carro_AlocarImediato.getValue()).getModelo().toLowerCase().replaceAll("\\p{Z}","") + ".jpg";
 	    			img_carro_AlocarImediato.setImage(new Image("img/carros/" + nomeImg));
@@ -1338,7 +1336,7 @@ public class MainAppController {
 		
 		carro_Vender.valueProperty().addListener(new ChangeListener<String>() {
 	        @Override
-	        public void changed(ObservableValue ov, String t, String t1) {
+	        public void changed(ObservableValue<? extends String> ov, String t, String t1) {
 	        	if(carro_Vender.getValue() != null){
 	        		String nomeImg = mapCarros.get(carro_Vender.getValue()).getModelo().toLowerCase().replaceAll("\\p{Z}","") + ".jpg";
 	    			img_carro_Vender.setImage(new Image("img/carros/" + nomeImg));
@@ -1427,7 +1425,7 @@ public class MainAppController {
 
     	carro_AgendarManutencao.valueProperty().addListener(new ChangeListener<String>() {
 	        @Override
-	        public void changed(ObservableValue ov, String t, String t1) {
+	        public void changed(ObservableValue<? extends String> ov, String t, String t1) {
 	        	if(carro_AgendarManutencao.getValue() != null){
 	        		String nomeImg = mapCarros.get(carro_AgendarManutencao.getValue()).getModelo().toLowerCase().replaceAll("\\p{Z}","") + ".jpg";
 	    			img_carro_AgendarManutencao.setImage(new Image("img/carros/" + nomeImg));
@@ -1516,5 +1514,9 @@ public class MainAppController {
     
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+    }
+    
+    public MainApp getMainApp(){
+    	return mainApp;
     }
 }
