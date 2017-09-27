@@ -1,4 +1,4 @@
-# Voce-Aluga
+# voce-aluga
 Project developed for the Fundamentals of Software Engineering (MAB533) class at Federal University of Rio de Janeiro
 
 Car rental system
