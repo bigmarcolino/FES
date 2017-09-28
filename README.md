@@ -10,8 +10,9 @@ Car rental system
 * MySQL database environment
 
 ### Run
+* Execute dump file in dump folder
 * Run MySQL
 * Open Eclipse
-* If you changed the MySQL default password, open the src/META-INF/persistence.xml file and change user and password in persistence-unit tag with name VoceAlugaLocal
 * Install the [e(fx)clipse plugin](http://www.eclipse.org/efxclipse/index.html)
+* If you changed the MySQL default password, open the src/META-INF/persistence.xml file and change user and password in persistence-unit tag with name VoceAlugaLocal
 * Run it
